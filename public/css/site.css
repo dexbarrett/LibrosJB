@@ -1,0 +1,29 @@
+body {
+    margin-top: 70px;
+}
+
+textarea
+{
+    resize: none;
+}
+
+div.book-row
+{
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 992px) {
+    .book-row .book {
+        margin-bottom: 10px !important;
+    }
+}
+
+.forsale
+{
+    margin-top: 28px;
+}
+
+.panel-heading span
+{
+    padding-left: 5px;
+}

@@ -42,6 +42,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof ModelNotFoundException) {
+            $e = new NotFoundHttpException($e->getMessage(), $e);
+        }
+        
         if (config('app.debug') && app()->environment() != 'testing') {
             return $this->renderExceptionWithWhoops($request, $e);
         }
@@ -60,7 +64,12 @@ class Handler extends ExceptionHandler
     {
         $whoops = new \Whoops\Run;
 
-        $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
+        if ($request->ajax()) {
+            $whoops->pushHandler(new \Whoops\Handler\JsonResponseHandler());
+        } else {
+            $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
+        }
+
 
         return new \Illuminate\Http\Response(
             $whoops->handleException($e),
