@@ -8,7 +8,7 @@ class Book extends Model
 {
     public function scopeForSale($query)
     {
-        return $query->where('for_sale', 1);
+        return $query->where('for_sale', 1)->orderBy('title');
     }
 
     public function setSalePriceAttribute($price)
@@ -16,14 +16,14 @@ class Book extends Model
         $this->attributes['sale_price'] = (int)$price * 100;
     }
 
-    public function setTitleAttribute($title)
-    {
-        $this->attributes['title'] = strtolower($title);
-    }
-
     public function getSalePriceAttribute($price)
     {
         return ($price / 100);
+    }
+
+    public function setTitleAttribute($title)
+    {
+        $this->attributes['title'] = strtolower($title);
     }
 
     public function getTitleAttribute($title)

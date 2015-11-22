@@ -16,10 +16,10 @@ class CreateBooksTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('title');
-            $table->string('author');
+            $table->integer('author_id')->unsigned();
             $table->mediumInteger('pages');
             $table->mediumInteger('year');
-            $table->string('publisher');
+            $table->integer('publisher_id')->unsigned();
             $table->string('edition');
             $table->text('extract');
             $table->string('cover_picture');
@@ -30,9 +30,12 @@ class CreateBooksTable extends Migration
             $table->string('url_slug');
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('publisher_id')->references('id')->on('publishers');
+
             $table->index('url_slug');
 
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

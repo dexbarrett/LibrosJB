@@ -13,7 +13,8 @@ class RegisterBook
     protected $bookCoverFileName;
     protected $bookCoverFile;
 
-    public function __construct(Book $book, BookFormValidator $validator, ImageManager $imageManipulator)
+    public function __construct(Book $book, Author $author, Publisher $publisher,
+     BookFormValidator $validator, ImageManager $imageManipulator)
     {
         $this->book = $book;
         $this->validator = $validator;
@@ -45,23 +46,23 @@ class RegisterBook
     protected function storeBook(array $data)
     {
         $book = new Book;
-
-        $this->bookCoverFileName = $this->generateCoverFileName($data['cover']);
-        $this->bookCoverFile = $data['cover'];
-
         $book->user_id = 1;
         $book->title = $data['title'];
-        $book->author = $data['author'];
-        $book->publisher = $data['publisher'];
         $book->edition = $data['edition'];
         $book->year = $data['edition_year'];
         $book->pages = $data['pages'];
         $book->extract = $data['extract'];
         $book->condition = $data['condition'];
         $book->sale_price = $data['price'];
-        $book->for_sale = array_get($data, 'for-sale', 0); // Laravel array helper
-        $book->cover_picture = $this->bookCoverFileName;
         $book->comments = $data['comments'];
+        $book->for_sale = array_get($data, 'for-sale', 0); // Laravel array helper
+
+        $this->bookCoverFileName = $this->generateCoverFileName($data['cover']);
+        $this->bookCoverFile = $data['cover'];
+        $book->cover_picture = $this->bookCoverFileName;
+
+        $book->author_id = $this->retrieveAuthorId($data['author']);
+        $book->publisher_id = $this->retrievePublisherId($data['publisher']);
 
         $book->save();
     }
@@ -71,12 +72,34 @@ class RegisterBook
     {
         $this->imageManipulator->make($this->bookCoverFile)
             ->resize(200, 325)
-            ->save('images/' . $this->bookCoverFileName);
+            ->save(config('app.book-cover-thumbnail-path') . '/' . $this->bookCoverFileName);
     }
 
     protected function generateCoverFileName(UploadedFile $imageFile)
     {
         return time() . "." . $imageFile->guessExtension();
+    }
+
+    protected function retrieveAuthorId($authorField)
+    {
+        $id = (int) $authorField;
+
+        if ($id === 0) {
+            return Author::firstOrCreate(['name' => $authorField])->id;
+        }
+
+        return $id;  
+    }
+
+    protected function retrievePublisherId($publisherField)
+    {
+        $id = (int) $publisherField;
+
+        if ($id === 0) {
+            return Publisher::firstOrCreate(['name' => $publisherField])->id;
+        }
+
+        return $id;
     }
    
 }

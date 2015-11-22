@@ -2,6 +2,8 @@
 
 return [
 
+    'book-cover-thumbnail-path' => 'images/book-covers',
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -140,6 +142,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        LibrosJB\Providers\ViewComposerServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -6,54 +6,86 @@ use Illuminate\Contracts\Validation\Factory as ValidatorFactory;
 
 abstract class FormValidator
 {
-  protected $validator;
-  protected $errors = [];
-  protected $rules = [];
-  protected $friendlyNames = [];
-  protected $rulesToUse;
+    protected $validator;
+    protected $errors = [];
+    protected $rules = [];
+    protected $data = [];
+    protected $friendlyNames = [];
+    protected $rulesToUse;
 
-  public function __construct(ValidatorFactory $validator)
-  {
-      $this->validator = $validator;
-      $this->setRules('create');
-  }
+    public function __construct(ValidatorFactory $validator)
+    {
+        $this->validator = $validator;
+        $this->setRules('create');
+    }
 
-  public function validate($data)
-  {
-      $validator = $this->validator->make($data, $this->getRules());
+    protected function getConditionalRules()
+    {
+        return [];
+    }
 
-      $this->setFriendlyLabels($validator);
+    public function validate($data)
+    {
+        $this->data = $data;
 
-      if ($validator->fails()) {
-          $this->errors = $validator->errors();
-          return false;
-      }
+        $validator = $this->validator->make($this->data, $this->getRules());
 
-      return true;
-  }
+        $this->setFriendlyLabels($validator);
+        $this->setConditionalRules($validator);
 
-  public function errors()
-  {
-      return $this->errors;
-  }
+        if ($validator->fails()) {
+            $this->errors = $validator->errors();
+            return false;
+        }
 
-  public function setRules($ruleGroup)
-  {
-      $this->rulesToUse = $ruleGroup;
+        return true;
+    }
 
-      return $this;
-  }
+    public function errors()
+    {
+        return $this->errors;
+    }
 
-  protected function getRules()
-  {
-      return $this->rules[$this->rulesToUse];
-  }
+    public function setRules($ruleGroup)
+    {
+        $this->rulesToUse = $ruleGroup;
 
-  protected function setFriendlyLabels(Validator $validator)
-  {
-      if (count($this->friendlyNames) > 0) {
-          $validator->setAttributeNames($this->friendlyNames);
-      }
-  }
+        return $this;
+    }
+
+    protected function getRules()
+    {
+        return $this->rules[$this->rulesToUse];
+    }
+
+    protected function getFieldValue($key)
+    {
+        return $this->data[$key];
+    }
+
+    protected function setFriendlyLabels(Validator $validator)
+    {
+        if (count($this->friendlyNames) > 0) {
+            $validator->setAttributeNames($this->friendlyNames);
+        }
+    }
+
+    public function setConditionalRules(Validator $validator)
+    {
+        $conditionalRules = $this->getConditionalRules();
+
+        if (count($conditionalRules) == 0) {
+            return;
+        }
+
+        $this->addConditionalRulesToValidator($validator, $conditionalRules);
+    }
+
+    protected function addConditionalRulesToValidator(Validator $validator, $conditionalRules)
+    {
+        foreach ($conditionalRules[$this->rulesToUse] as $field => $options) {
+            $validator->sometimes($field, $options['rules'], $options['condition']);
+        }
+    }
 
 }
