@@ -17,4 +17,9 @@ class Author extends Model
     {
         return ucwords($name);
     }
+
+    public function books()
+    {
+        return $this->hasMany('LibrosJB\Book');
+    }
 }

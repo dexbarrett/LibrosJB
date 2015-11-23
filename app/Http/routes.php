@@ -11,7 +11,8 @@
 |
 */
 
-Route::get('/', 'BookController@index');
+Route::get('/{sortBy?}/{direction?}', 'BookController@index')
+->where(['sortBy' => 'titulo|precio|autor', 'direction' => 'asc|desc']);
 
 Route::get('books/create', 'BookController@create');
 

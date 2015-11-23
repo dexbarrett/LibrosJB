@@ -23,10 +23,21 @@ class BookController extends Controller
         return view('admin.create-book');
     }
 
-    public function index()
+    public function index($sortBy = 'titulo', $direction = 'asc')
     {
-        $books = Book::forSale()->select(['title', 'cover_picture'])->get();
-        return view('home')->with(compact('books'));       
+
+        $books = Book::join('authors', function($join){
+            $join->on('books.author_id', '=', 'authors.id')
+            ->where('books.for_sale', '=', true);
+        })
+        ->select(['books.cover_picture', 'books.title'])
+        ->orderBy(mapFieldToDBColumn($sortBy), $direction)
+        ->orderBy(mapFieldToDBColumn('titulo'), $direction)
+        ->paginate(config('app.books-on-sale-per-page'));
+
+        return view('home')->with(compact('books'))
+            ->with('sortField', $sortBy)
+            ->with('direction', $direction);       
     }
 
     public function store()

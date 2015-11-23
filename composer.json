@@ -25,7 +25,10 @@
         ],
         "psr-4": {
             "LibrosJB\\": "app/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
