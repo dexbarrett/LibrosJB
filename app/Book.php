@@ -3,9 +3,18 @@
 namespace LibrosJB;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\SluggableTrait;
+use Cviebrock\EloquentSluggable\SluggableInterface;
 
-class Book extends Model
+class Book extends Model implements SluggableInterface
 {
+    use SluggableTrait;
+
+    protected $sluggable = [
+        'build_from' => ['author.name', 'title'],
+        'save_to'    => 'url_slug'
+    ];
+
     public function scopeForSale($query)
     {
         return $query->where('for_sale', 1);

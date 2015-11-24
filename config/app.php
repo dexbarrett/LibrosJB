@@ -144,6 +144,7 @@ return [
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         LibrosJB\Providers\ViewComposerServiceProvider::class,
+        Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
 
         /*
          * Application Service Providers...
