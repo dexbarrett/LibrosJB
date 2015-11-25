@@ -48,11 +48,11 @@ class RegisterBook
         $book = new Book;
         $book->user_id = 1;
         $book->title = $data['title'];
-        $book->edition = $data['edition'];
-        $book->year = $data['edition_year'];
+        $book->language_id = $data['language'];
+        $book->edition_year = $data['edition_year'];
         $book->pages = $data['pages'];
         $book->extract = $data['extract'];
-        $book->condition = $data['condition'];
+        $book->book_condition_id = $data['condition'];
         $book->sale_price = $data['price'];
         $book->comments = $data['comments'];
         $book->for_sale = array_get($data, 'for-sale', 0); // Laravel array helper

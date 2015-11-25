@@ -27,3 +27,19 @@ div.book-row
 {
     padding-left: 5px;
 }
+
+.book-details ul
+{
+    list-style-type: none;
+}
+
+.book-details li
+{
+    margin-left: -40px;
+}
+
+.book-details-buy
+{
+    margin-top: .5em;
+    width: 200px;
+}

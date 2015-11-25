@@ -15,10 +15,14 @@ class Book extends Model implements SluggableInterface
         'save_to'    => 'url_slug'
     ];
 
+    /* Query Scopes */
+
     public function scopeForSale($query)
     {
         return $query->where('for_sale', 1);
     }
+
+    /* Accesors and Mutators */
 
     public function setSalePriceAttribute($price)
     {
@@ -40,6 +44,14 @@ class Book extends Model implements SluggableInterface
         return ucwords($title);
     }
 
+    public function getCoverThumbnailPathAttribute()
+    {
+        return '/' . config('app.book-cover-thumbnail-path') . '/' .
+                $this->attributes['cover_picture'];   
+    }
+
+    /* Relationships */
+
     public function author()
     {
         return $this->belongsTo('LibrosJB\Author');
@@ -48,5 +60,15 @@ class Book extends Model implements SluggableInterface
     public function publisher()
     {
         return $this->belongsTo('LibrosJB\Publisher');
+    }
+
+    public function language()
+    {
+        return $this->belongsTo('LibrosJB\BookLanguage');
+    }
+
+    public function condition()
+    {
+        return $this->belongsTo('LibrosJB\BookCondition', 'book_condition_id');
     }
 }

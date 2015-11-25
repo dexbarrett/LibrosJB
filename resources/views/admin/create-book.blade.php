@@ -36,8 +36,8 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    {!! Form::label('edition', 'Edición') !!}
-                    {!! Form::text('edition', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
+                    {!! Form::label('language', 'Idioma') !!}
+                    {!! Form::select('language', $bookLanguages, null, ['class' => 'form-control']) !!}
                 </div>
             </div>
             <div class="col-md-4">

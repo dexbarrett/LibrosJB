@@ -18,6 +18,8 @@ Route::get('books/create', 'BookController@create');
 
 Route::post('books/create', 'BookController@store');
 
+Route::get('books/{slug}', 'BookController@show');
+
 Route::get('author-search', 'SearchController@findByAuthorName');
 
 Route::get('publisher-search', 'SearchController@findByPublisherName');

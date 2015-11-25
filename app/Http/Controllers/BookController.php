@@ -30,7 +30,7 @@ class BookController extends Controller
             $join->on('books.author_id', '=', 'authors.id')
             ->where('books.for_sale', '=', true);
         })
-        ->select(['books.cover_picture', 'books.title'])
+        ->select(['books.cover_picture', 'books.title', 'books.url_slug'])
         ->orderBy(mapFieldToDBColumn($sortBy), $direction)
         ->orderBy(mapFieldToDBColumn('titulo'), $direction)
         ->paginate(config('app.books-on-sale-per-page'));
@@ -38,6 +38,18 @@ class BookController extends Controller
         return view('home')->with(compact('books'))
             ->with('sortField', $sortBy)
             ->with('direction', $direction);       
+    }
+
+    public function show($bookSlug)
+    {
+        $book = Book::whereSlug($bookSlug)
+            ->with('author')
+            ->with('publisher')
+            ->with('language')
+            ->with('condition')
+            ->firstOrFail();
+        
+        return view('books.book-detail')->with(compact('book'));
     }
 
     public function store()
