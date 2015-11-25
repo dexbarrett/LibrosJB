@@ -22,7 +22,7 @@ class Book extends Model implements SluggableInterface
         return $query->where('for_sale', 1);
     }
 
-    /* Accesors and Mutators */
+    /* Accessors and Mutators */
 
     public function setSalePriceAttribute($price)
     {
