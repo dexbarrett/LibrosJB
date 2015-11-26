@@ -15,6 +15,7 @@ class BookController extends Controller
 
     public function __construct(RegisterBook $registerBook)
     {
+        parent::__construct();
         $this->registerBook = $registerBook;
     }
 
@@ -54,8 +55,10 @@ class BookController extends Controller
 
     public function store()
     {
+        $data = collect(request()->all())
+        ->put('user_id', $this->user->id);
 
-        if ($this->bookDataHasErrors()) {
+        if ($this->bookDataHasErrors($data->toArray())) {
             return redirect()
             ->back()
             ->withInput()
@@ -64,11 +67,11 @@ class BookController extends Controller
 
         return redirect()
             ->back()
-            ->with('flash-message', 'Libro registrado correctamente');
+            ->with('message', 'Libro registrado correctamente');
     }
 
-    protected function bookDataHasErrors()
+    protected function bookDataHasErrors($data)
     {
-       return ! $this->registerBook->create(request()->all());
+       return ! $this->registerBook->create($data);
     }
 }

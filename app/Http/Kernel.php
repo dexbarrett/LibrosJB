@@ -29,5 +29,6 @@ class Kernel extends HttpKernel
         'auth' => \LibrosJB\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \LibrosJB\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth.admin' => \LibrosJB\Http\Middleware\AdminAuthMiddleware::class,
     ];
 }

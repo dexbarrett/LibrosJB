@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('page-title', 'Libros en venta')
 @section('navbar-content')
-<div id="navbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ordenar por <strong>{{ $sortField }}</strong> <span class="fa fa-sort-{{ $direction }}"></span></a>
@@ -12,7 +11,6 @@
             </ul>
         </li>
     </ul>
-</div><!--/.nav-collapse -->
 @stop
 @section('page-content')
 @foreach($books->chunk(4) as $row)

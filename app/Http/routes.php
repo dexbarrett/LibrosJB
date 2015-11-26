@@ -14,12 +14,17 @@
 Route::get('/{sortBy?}/{direction?}', 'BookController@index')
 ->where(['sortBy' => 'titulo|precio|autor', 'direction' => 'asc|desc']);
 
-Route::get('books/create', 'BookController@create');
-
-Route::post('books/create', 'BookController@store');
-
 Route::get('books/{slug}', 'BookController@show');
 
 Route::get('author-search', 'SearchController@findByAuthorName');
 
 Route::get('publisher-search', 'SearchController@findByPublisherName');
+
+Route::get('adminlogin', 'SessionController@showAdminLogin');
+Route::post('adminlogin', 'SessionController@authAdminLogin');
+Route::get('logout', 'SessionController@logout');
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
+    Route::get('books/create', 'BookController@create');
+    Route::post('books/create', 'BookController@store');
+});

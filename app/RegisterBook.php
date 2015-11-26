@@ -46,7 +46,7 @@ class RegisterBook
     protected function storeBook(array $data)
     {
         $book = new Book;
-        $book->user_id = 1;
+        $book->user_id = $data['user_id'];
         $book->title = $data['title'];
         $book->language_id = $data['language'];
         $book->edition_year = $data['edition_year'];
