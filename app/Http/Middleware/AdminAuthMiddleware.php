@@ -24,22 +24,25 @@ class AdminAuthMiddleware
     public function handle($request, Closure $next)
     {
         if ($this->auth->guest()) {
+
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('adminlogin')
-                                 ->with('message', 'debes iniciar sesión para ver el contenido');
-            }
+            } 
+
+            return redirect()->guest('adminlogin')
+                    ->with('message', 'debes iniciar sesión para ver el contenido');  
         }
 
         if (! $this->auth->user()->isAdmin()) {
+            
             if ($request->ajax()) {
                 return response('Forbidden.', 403);
-            } else {
-                abort(403);
-            }
+            } 
+
+            abort(403);
         }
 
         return $next($request);
+
     }
 }

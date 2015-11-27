@@ -43,3 +43,11 @@ div.book-row
     margin-top: .5em;
     width: 200px;
 }
+
+.dashboard a {
+    text-decoration: none !important;
+}
+
+.dashboard td {
+    vertical-align: middle !important;
+}

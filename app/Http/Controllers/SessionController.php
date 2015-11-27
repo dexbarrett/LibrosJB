@@ -20,7 +20,7 @@ class SessionController extends Controller
         $password = request()->input('password');
 
         if (auth()->attempt(compact('email', 'password'))) {
-            return redirect()->intended('/');
+            return redirect()->action('DashboardController@index');
         }
 
         return redirect()->back()

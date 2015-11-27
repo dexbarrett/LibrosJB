@@ -27,4 +27,5 @@ Route::get('logout', 'SessionController@logout');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
     Route::get('books/create', 'BookController@create');
     Route::post('books/create', 'BookController@store');
+    Route::get('dashboard', 'DashboardController@index');
 });

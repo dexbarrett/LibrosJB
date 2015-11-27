@@ -22,6 +22,11 @@ class Book extends Model implements SluggableInterface
         return $query->where('for_sale', 1);
     }
 
+    public function scopeForUser($query, $userId)
+    {
+        return $query->where('user_id', '=', $userId);
+    }
+
     /* Accessors and Mutators */
 
     public function setSalePriceAttribute($price)
