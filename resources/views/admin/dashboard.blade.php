@@ -24,7 +24,7 @@
                 </td>
                 <td class="col-md-2 text-center">
                     <div class="btn-group">
-                        <a href="#" class="btn btn-primary btn-sm tooltipster" title="editar">
+                        <a href="{{ action('BookController@edit', ['id' => $book->id]) }}" class="btn btn-primary btn-sm tooltipster" title="editar">
                             <i class="fa fa-pencil button-icon"></i>
                         </a>
                     </div>

@@ -15,7 +15,7 @@ class ViewComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['admin.create-book'], function ($view) {
+        view()->composer(['admin.create-book', 'admin.edit-book'], function ($view) {
             $view->with('bookConditions', BookCondition::all()->lists('name', 'id'));
             $view->with('bookLanguages', BookLanguage::all()->lists('name', 'id'));
         });

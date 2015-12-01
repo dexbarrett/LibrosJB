@@ -50,7 +50,8 @@ class BookFormValidator extends FormValidator
     protected function getConditionalRules()
     {
         return [
-            'create' => $this->getConditionalRulesForCreation()        
+            'create' => $this->getConditionalRulesForCreation(),
+            'update' => $this->getConditionalRulesForUpdating()        
         ];
     }
 
@@ -67,5 +68,10 @@ class BookFormValidator extends FormValidator
                 'condition' => function(){ return intval($this->getFieldValue('publisher')) > 0; }
             ]
         ];       
+    }
+
+    protected function getConditionalRulesForUpdating()
+    {
+        return $this->getConditionalRulesForCreation();
     }
 }   

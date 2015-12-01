@@ -53,6 +53,29 @@ class BookController extends Controller
         return view('books.book-detail')->with(compact('book'));
     }
 
+    public function edit($id)
+    {
+        $book = Book::findOrFail($id);
+        $author = $book->author()->lists('name', 'id');
+        $publisher = $book->publisher()->lists('name', 'id');
+
+        return view('admin.edit-book')->with(compact('book', 'author', 'publisher'));
+    }
+
+    public function update($id)
+    {
+        if (! $this->registerBook->update($id, request()->all())) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors($this->registerBook->errors());
+        }
+
+        return redirect()
+            ->action('BookController@edit', ['id' => $id])
+            ->with('message', 'Libro actualizado correctamente');
+    }
+
     public function store()
     {
         $data = collect(request()->all())

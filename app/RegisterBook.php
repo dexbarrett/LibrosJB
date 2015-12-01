@@ -23,7 +23,7 @@ class RegisterBook
 
     public function create(array $input)
     {
-        if ($this->dataIsNotValid($input)) {
+        if ($this->dataIsNotValidToCreate($input)) {
             return false;
         }
 
@@ -33,14 +33,30 @@ class RegisterBook
         return true;
     }
 
+    public function update($id, array $input)
+    {
+        if ($this->dataIsNotValidToUpdate($input)) {
+            return false;
+        }
+
+        $this->updateBook($id, $input);
+
+        return true;
+    }
+
     public function errors()
     {
         return $this->validator->errors();
     }
 
-    protected function dataIsNotValid(array $data)
+    protected function dataIsNotValidToCreate(array $data)
     {
         return ! $this->validator->validate($data);
+    }
+
+    protected function dataIsNotValidToUpdate(array $data)
+    {
+        return ! $this->validator->setRules('update')->validate($data);
     }
 
     protected function storeBook(array $data)
@@ -67,6 +83,25 @@ class RegisterBook
         $book->save();
     }
 
+    protected function updateBook($id, array $data)
+    {
+        $book = Book::findOrFail($id);
+
+        $book->title = $data['title'];
+        $book->language_id = $data['language'];
+        $book->edition_year = $data['edition_year'];
+        $book->pages = $data['pages'];
+        $book->extract = $data['extract'];
+        $book->book_condition_id = $data['condition'];
+        $book->sale_price = $data['price'];
+        $book->comments = $data['comments'];
+        $book->for_sale = array_get($data, 'for-sale', 0); // Laravel array helper
+
+        $book->author_id = $this->retrieveAuthorId($data['author']);
+        $book->publisher_id = $this->retrievePublisherId($data['publisher']);
+
+        $book->save();
+    }
 
     protected function createBookCover()
     {
