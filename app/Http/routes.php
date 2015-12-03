@@ -29,5 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
     Route::post('books/create', 'BookController@store');
     Route::get('books/edit/{id}', 'BookController@edit');
     Route::post('books/update/{id}', 'BookController@update');
+    Route::post('books/status/{id}/{status}', 'BookController@changeStatus')
+        ->where(['id' => '\d+', 'status' => 'true|false']);
     Route::get('dashboard', 'DashboardController@index');
 });

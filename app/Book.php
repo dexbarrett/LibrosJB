@@ -49,6 +49,11 @@ class Book extends Model implements SluggableInterface
         return ucwords($title);
     }
 
+    public function setForSaleAttribute($forsale)
+    {
+        $this->attributes['for_sale'] = (($forsale === 'true') ? 1 : 0);
+    }
+
     public function getCoverThumbnailPathAttribute()
     {
         return '/' . config('app.book-cover-thumbnail-path') . '/' .
