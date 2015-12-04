@@ -93,8 +93,11 @@ class BookController extends Controller
             ->with('message', 'Libro registrado correctamente');
     }
 
-    public function changeStatus($id, $status)
+    public function changeStatus()
     {
+        $id = e(request()->input('id'));
+        $status = e(request()->input('status'));
+
         $book = Book::findOrFail($id);
 
         $book->for_sale = $status;

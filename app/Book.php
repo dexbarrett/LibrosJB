@@ -51,7 +51,14 @@ class Book extends Model implements SluggableInterface
 
     public function setForSaleAttribute($forsale)
     {
-        $this->attributes['for_sale'] = (($forsale === 'true') ? 1 : 0);
+
+        if ($forsale === 'true') {
+            $forsale = 1;
+        } elseif ($forsale === 'false') {
+            $forsale = 0;
+        }
+
+        $this->attributes['for_sale'] = $forsale;
     }
 
     public function getCoverThumbnailPathAttribute()

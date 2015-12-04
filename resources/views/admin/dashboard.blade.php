@@ -50,15 +50,16 @@
     });
     $('.forsale').on('change', function(e){
         var bookId = $(this).data('id');
-        var state  = $(this).prop('checked');
+        var status  = $(this).prop('checked');
         $.ajax({
-            url: '/admin/books/status/' + bookId + '/' + state,
+            url: '/admin/books/status',
             type: 'POST',
+            data: {
+                id: bookId,
+                status: status
+            },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            error: function(){
-                console.log('deeead');
             }
         });
     });
