@@ -7,6 +7,7 @@
 <link href="/lib/tooltipster/tooltipster.css" rel="stylesheet">
 <link href="/lib/tooltipster/tooltipster-noir.css" rel="stylesheet">
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
+<link href="/lib/sweetalert/sweetalert.css" rel="stylesheet">
 @stop
 @section('page-content')
 <table class="table table-condensed dashboard">
@@ -29,7 +30,7 @@
                 <td class="col-md-2 text-center">
                     <div class="btn-group">
                         <a href="{{ action('BookController@edit', ['id' => $book->id]) }}" class="btn btn-primary btn-xs tooltipster" title="editar"><i class="fa fa-pencil button-icon"></i></a> 
-                        {!! Form::checkbox('for-sale-' . $book->id, '1', $book->for_sale, ['class' => 'forsale', 'data-id' => $book->id]) !!}
+                        <span class="toggle-wrapper">{!! Form::checkbox('for-sale-' . $book->id, '1', $book->for_sale, ['class' => 'forsale', 'data-id' => $book->id]) !!}</span>
                     </div>
                 </td>
             </tr>
@@ -40,29 +41,52 @@
 @section('custom-scripts')
 <script src="/lib/tooltipster/jquery.tooltipster.min.js"></script>
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+<script src="/lib/sweetalert/sweetalert.min.js"></script>
 <script>
+    var changingStatus = null;
+
     $('.forsale').bootstrapToggle({
         size: 'mini',
         on: 'en venta',
-        off: 'vendido',
+        off: 'no en venta',
         onstyle: 'success',
-        offstyle: 'danger'
+        offstyle: 'danger',
+        width: 88
     });
-    $('.forsale').on('change', function(e){
-        var bookId = $(this).data('id');
-        var status  = $(this).prop('checked');
-        $.ajax({
+    $('.toggle-wrapper').on('click', function(e){
+        e.stopPropagation();
+
+        if (changingStatus) {
+            return;
+        }
+
+        var selectedSwitch = $(this).find('.forsale');
+        var bookId  = selectedSwitch.data('id');
+        var status  = ! selectedSwitch.prop('checked');
+
+        changingStatus = $.ajax({
             url: '/admin/books/status',
             type: 'POST',
+            timeout: 3000,
+            cache: false,
             data: {
                 id: bookId,
                 status: status
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function () {
+                changingStatus = null;
+                selectedSwitch.bootstrapToggle('toggle');
+            },
+            error: function () {
+                changingStatus = null;
+                swal("¡Ups!", "Ocurrió un error al tratar de cambiar el estado del libro", "error");
             }
         });
     });
+
     $('.tooltipster').tooltipster({
         theme: 'tooltipster-noir'
     });
