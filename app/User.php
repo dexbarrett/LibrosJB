@@ -39,6 +39,6 @@ class User extends Model implements AuthenticatableContract,
 
     public function isAdmin()
     {
-        return (bool)$this->attributes['admin'] == true;
+        return (bool)$this->attributes['admin'] === true;
     }
 }
