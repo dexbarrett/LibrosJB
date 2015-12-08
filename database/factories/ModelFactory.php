@@ -13,9 +13,32 @@
 
 $factory->define(LibrosJB\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'email' => 'admin@librosjb.com',
+        'password' => bcrypt('topsecret'),
+        'admin' => 1
+    ];
+});
+
+$factory->define(LibrosJB\Author::class, function(Faker\Generator $faker) {
+    return [
+        'name' => 'stephen king'
+    ];
+});
+
+$factory->define(LibrosJB\Publisher::class, function(Faker\Generator $faker) {
+    return [
+        'name' => 'plaza janes'
+    ];
+});
+
+$factory->define(LibrosJB\BookCondition::class, function(Faker\Generator $faker) {
+    return [
+        'name' => 'nuevo'
+    ];
+});
+
+$factory->define(LibrosJB\BookLanguage::class, function(Faker\Generator $faker) {
+    return [
+        'name' => 'español'
     ];
 });
