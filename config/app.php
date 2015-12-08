@@ -141,7 +141,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         LibrosJB\Providers\ViewComposerServiceProvider::class,
         Cviebrock\EloquentSluggable\SluggableServiceProvider::class,
