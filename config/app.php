@@ -3,6 +3,8 @@
 return [
 
     'book-cover-thumbnail-path' => 'images/book-covers',
+    'photo-path'                => 'images/book-photos/photos',
+    'photo-thumbnail-path'      => 'images/book-photos/thumbnails',
     'books-on-sale-per-page'    => 12,
 
     /*

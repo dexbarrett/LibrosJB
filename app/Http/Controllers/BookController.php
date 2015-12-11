@@ -48,6 +48,7 @@ class BookController extends Controller
             ->with('publisher')
             ->with('language')
             ->with('condition')
+            ->with('photos')
             ->firstOrFail();
         
         return view('books.book-detail')->with(compact('book'));
