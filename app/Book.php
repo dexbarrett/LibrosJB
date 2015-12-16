@@ -15,6 +15,11 @@ class Book extends Model implements SluggableInterface
         'save_to'    => 'url_slug'
     ];
 
+    public function addPhoto(Photo $photo)
+    {
+        return $this->photos()->save($photo);
+    }
+
     /* Query Scopes */
 
     public function scopeForSale($query)
@@ -87,5 +92,10 @@ class Book extends Model implements SluggableInterface
     public function condition()
     {
         return $this->belongsTo('LibrosJB\BookCondition', 'book_condition_id');
+    }
+
+    public function photos()
+    {
+        return $this->hasMany('LibrosJB\Photo');
     }
 }

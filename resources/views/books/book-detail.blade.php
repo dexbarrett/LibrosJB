@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('page-title', $book->title)
+@section('custom-styles')
+<link href="/lib/fancybox/jquery.fancybox.css" rel="stylesheet">
+@stop
 @section('page-content')
 <div class="row">
     <div class="col-md-3 book-detail-cover">
@@ -19,6 +22,32 @@
         </ul>
         <p><strong>Sinopsis</strong></p>
         <p class="text-justify">{{ $book->extract }}</p>
+        <hr>
+        <div class="row">
+            @if($book->photos->count() > 0)
+                @foreach($book->photos->chunk(3) as $photoRow)
+                    <div class="row">
+                        @foreach($photoRow as $photo)
+                            <div class="col-md-4 text-center">
+                                <a href="{{ $photo->photo_path }}" class="fancybox" rel="photo-gallery">
+                                    <img src="{{ $photo->thumbnail_path }}" alt="">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
+            @endif
+        </div>
     </div>
 </div>
+@stop
+@section('custom-scripts')
+<script src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".fancybox").fancybox({
+            loop: false
+        });
+    });
+</script>
 @stop
