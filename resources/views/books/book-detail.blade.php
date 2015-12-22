@@ -34,7 +34,10 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(".fancybox").fancybox({
-            loop: false
+            loop: false,
+            tpl: {
+                error: '<p class="fancybox-error">No fue posible cargar la imagen</p>'
+            }
         });
     });
 </script>
