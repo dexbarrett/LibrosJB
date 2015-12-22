@@ -33,14 +33,33 @@
 @section('custom-scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.2.0/dropzone.js"></script>
 <script src="/lib/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+<script id="photo-template" type="x-tmpl-mustache">
+ <li>
+    <img src="/@{{ thumbnailPath }}" class="img-responsive">
+    <div class="delete-photo">
+        <a href="#" class="btn btn-sm btn-danger" data-photo-id="@{{ photoID }}"><i class="fa fa-trash fa-4x"></i></a>
+    </div>
+</li>
+</script>
 <script>
+    photoTemplate = $('#photo-template').html();
+    photoList = $('.img-list');
+
     Dropzone.autoDiscover = false;
-    $('.dropzone').dropzone({
+
+    var uploader = new Dropzone('.dropzone', {
         paramName: 'photo',
         acceptedFiles: 'image/*',
         dictInvalidFileType: 'tipo de archivo inválido',
         dictDefaultMessage: 'Haz clic aquí o arrastra imágenes directamente',
         dictMaxFilesExceeded: 'número de imágenes excedido'
+    });
+
+    uploader.on('success', function(file, photoData){
+        this.removeFile(file);
+        var photoItem = $(Mustache.render(photoTemplate, photoData));
+        photoItem.hide().appendTo(photoList).fadeIn();
     });
 
     $('.img-list').on('click', '.delete-photo a', function(){

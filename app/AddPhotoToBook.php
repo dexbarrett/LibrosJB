@@ -8,11 +8,13 @@ class AddPhotoToBook
 {
     protected $book;
     protected $file;
+    protected $photoData;
 
     public function __construct(Book $book, UploadedFile $file)
     {
         $this->book = $book;
         $this->file = $file;
+        $this->photoData = [];
     }
 
     public function save()
@@ -28,6 +30,11 @@ class AddPhotoToBook
         Image::make($this->file)
         ->resize(100, 150)
         ->save(config('app.photo-thumbnail-path') . '/' . $photo->thumbnail_filename);
+
+        $this->photoData['thumbnailPath'] = $photo->thumbnail_path;
+        $this->photoData['photoID'] = $photo->id;
+
+        return $this;
     }
 
     protected function makePhoto()
@@ -38,5 +45,15 @@ class AddPhotoToBook
     protected function makeFileName()
     {
         return sha1(time() . str_random(5)) . '.' . $this->file->guessExtension();
+    }
+
+    /**
+     * Gets the value of photoData.
+     *
+     * @return mixed
+     */
+    public function getPhotoData()
+    {
+        return $this->photoData;
     }
 }

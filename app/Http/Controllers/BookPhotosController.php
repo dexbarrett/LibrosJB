@@ -24,7 +24,9 @@ class BookPhotosController extends Controller
         $book = Book::findOrFail($bookID);
         $photo = request()->file('photo');
 
-        (new AddPhotoToBook($book, $photo))->save();
+        $photoMaker = (new AddPhotoToBook($book, $photo))->save();
+
+        return response($photoMaker->getPhotoData());
     }
 
     public function delete()
