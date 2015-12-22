@@ -18,7 +18,7 @@
         @foreach($row as $book)
             <div class="col-md-3 col-sm-6 book">
                 <a href="{{ action('BookController@show', ['slug' => $book->url_slug]) }}">
-                    <img src="{{ $book->cover_thumbnail_path }}" title="{{ $book->title }}" class="img-responsive img-thumbnail center-block">
+                    <img src="/{{ $book->cover_thumbnail_path }}" title="{{ $book->title }}" class="img-responsive img-thumbnail center-block">
                 </a>
             </div>
         @endforeach

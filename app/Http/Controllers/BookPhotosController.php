@@ -3,6 +3,7 @@
 namespace LibrosJB\Http\Controllers;
 
 use LibrosJB\Book;
+use LibrosJB\Photo;
 use LibrosJB\Http\Requests;
 use Illuminate\Http\Request;
 use LibrosJB\AddPhotoToBook;
@@ -12,8 +13,10 @@ class BookPhotosController extends Controller
 {
     public function create($bookID)
     {
+        $book = Book::findOrFail($bookID);
+
         return view('admin.book-photos')
-            ->with(compact('bookID'));
+            ->with(compact('book'));
     }
 
     public function store($bookID)
@@ -22,5 +25,11 @@ class BookPhotosController extends Controller
         $photo = request()->file('photo');
 
         (new AddPhotoToBook($book, $photo))->save();
+    }
+
+    public function delete()
+    {
+        $photo = Photo::findOrFail(e(request()->input('photoID')));
+        $photo->delete();
     }
 }

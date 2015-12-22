@@ -68,7 +68,7 @@ class Book extends Model implements SluggableInterface
 
     public function getCoverThumbnailPathAttribute()
     {
-        return '/' . config('app.book-cover-thumbnail-path') . '/' .
+        return config('app.book-cover-thumbnail-path') . '/' .
                 $this->attributes['cover_picture'];   
     }
 

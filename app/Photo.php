@@ -2,6 +2,7 @@
 
 namespace LibrosJB;
 
+use File;
 use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
@@ -17,18 +18,25 @@ class Photo extends Model
 
     public function getThumbnailPathAttribute()
     {
-        return '/' . config('app.photo-thumbnail-path') . '/' . 
+        return config('app.photo-thumbnail-path') . '/' . 
                 $this->attributes['thumbnail_filename'];
     }
 
     public function getPhotoPathAttribute()
     {
-        return '/' . config('app.photo-path') . '/' . 
+        return config('app.photo-path') . '/' . 
                 $this->attributes['filename'];
     }
 
     public function book()
     {
         return $this->belongsTo('LibrosJB\Book');
+    }
+
+    public function delete()
+    {
+        File::delete([$this->thumbnail_path, $this->photo_path]);
+
+        parent::delete();
     }
 }

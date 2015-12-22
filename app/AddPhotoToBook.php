@@ -37,6 +37,6 @@ class AddPhotoToBook
 
     protected function makeFileName()
     {
-        return time() . '.' . $this->file->guessExtension();
+        return sha1(time() . str_random(5)) . '.' . $this->file->guessExtension();
     }
 }

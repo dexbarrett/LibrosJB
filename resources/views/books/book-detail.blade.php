@@ -6,7 +6,7 @@
 @section('page-content')
 <div class="row">
     <div class="col-md-3 book-detail-cover">
-        <img src="{{ $book->cover_thumbnail_path }}" alt="{{ $book->title }}" class="img-responsive">
+        <img src="/{{ $book->cover_thumbnail_path }}" alt="{{ $book->title }}" class="img-responsive">
         <a href="#" class="btn btn-info book-details-buy">contactar vendedor</a>
     </div>
     <div class="col-md-9 book-details">
@@ -24,19 +24,7 @@
         <p class="text-justify">{{ $book->extract }}</p>
         <hr>
         <div class="row">
-            @if($book->photos->count() > 0)
-                @foreach($book->photos->chunk(3) as $photoRow)
-                    <div class="row">
-                        @foreach($photoRow as $photo)
-                            <div class="col-md-4 text-center">
-                                <a href="{{ $photo->photo_path }}" class="fancybox" rel="photo-gallery">
-                                    <img src="{{ $photo->thumbnail_path }}" alt="">
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-                @endforeach
-            @endif
+            @include('partials.photo-gallery')
         </div>
     </div>
 </div>

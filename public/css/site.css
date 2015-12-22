@@ -51,3 +51,41 @@ div.book-row
 .dashboard td {
     vertical-align: middle !important;
 }
+
+ul.img-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+ul.img-list li {
+  display: inline-block;
+  height: 150px;
+  margin: 0 1em 1em 0;
+  position: relative;
+  width: 100px;
+}
+
+div.delete-photo {
+  background: rgba(0,0,0,0.5);
+  color: white;
+  display: table;
+  left: 0;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  width: 100px;
+  height: 150px;
+}
+
+div.delete-photo a {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+ul.img-list li:hover div.delete-photo {
+  opacity: .7;
+}

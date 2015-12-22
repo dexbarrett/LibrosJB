@@ -33,5 +33,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
         ->where(['id' => '\d+', 'status' => 'true|false']);
     Route::get('books/{id}/photos', 'BookPhotosController@create');
     Route::post('books/{id}/photos', 'BookPhotosController@store');
+    Route::delete('photos/delete', 'BookPhotosController@delete');
     Route::get('dashboard', 'DashboardController@index');
 });
