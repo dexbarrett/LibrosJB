@@ -9,18 +9,18 @@
 @stop
 @section('page-content')
 <div class="row">
-    @if($book->photos->count() > 0)
-        <ul class="img-list">
-            @foreach($book->photos as $photo)
-                <li>
-                    <img src="/{{ $photo->thumbnail_path }}" alt="" class="img-responsive">
-                    <div class="delete-photo">
-                        <a href="#" class="btn btn-sm btn-danger" data-photo-id="{{ $photo->id }}"><i class="fa fa-trash fa-4x"></i></a>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
-    @endif
+    <ul class="img-list">
+        @if($book->photos->count() > 0)
+                @foreach($book->photos as $photo)
+                    <li>
+                        <img src="/{{ $photo->thumbnail_path }}" alt="" class="img-responsive">
+                        <div class="delete-photo">
+                            <a href="#" class="btn btn-sm btn-danger" data-photo-id="{{ $photo->id }}"><i class="fa fa-trash fa-4x"></i></a>
+                        </div>
+                    </li>
+                @endforeach
+        @endif
+    </ul>
 </div>
 <div class="row">
 <hr>
