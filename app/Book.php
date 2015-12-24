@@ -20,6 +20,12 @@ class Book extends Model implements SluggableInterface
         return $this->photos()->save($photo);
     }
 
+    public function changeStatus($status)
+    {
+        $this->for_sale = $status;
+        $this->save();
+    }
+
     /* Query Scopes */
 
     public function scopeForSale($query)

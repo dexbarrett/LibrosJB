@@ -99,11 +99,7 @@ class BookController extends Controller
         $id = e(request()->input('id'));
         $status = e(request()->input('status'));
 
-        $book = Book::findOrFail($id);
-
-        $book->for_sale = $status;
-        
-        $book->save(); 
+        Book::findOrFail($id)->changeStatus($status);
     }
 
     protected function bookDataHasErrors($data)
