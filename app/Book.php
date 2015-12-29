@@ -26,6 +26,11 @@ class Book extends Model implements SluggableInterface
         $this->save();
     }
 
+    public function hasComments()
+    {
+        return strlen(trim($this->comments)) > 0;
+    }
+
     /* Query Scopes */
 
     public function scopeForSale($query)

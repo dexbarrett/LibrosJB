@@ -22,6 +22,10 @@
         </ul>
         <p><strong>Sinopsis</strong></p>
         <p class="text-justify">{{ $book->extract }}</p>
+        @if($book->hasComments())
+        <p><strong>Comentarios del vendedor:</strong></p>
+        <p>{{ $book->comments }}</p>
+        @endif
         <hr>
         <div class="row">
             @include('partials.photo-gallery')
