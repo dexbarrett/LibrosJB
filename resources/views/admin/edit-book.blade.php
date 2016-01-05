@@ -107,7 +107,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        {!! Form::submit('Actualizar Libro', ['id' => 'publish', 'class' => 'btn btn-info btn-md btn-block']) !!}
+        {!! Form::submit('Actualizar Información', ['id' => 'publish', 'class' => 'btn btn-info btn-md btn-block']) !!}
     </div>
 </div>
 </div>
