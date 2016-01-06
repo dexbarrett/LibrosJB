@@ -11,18 +11,19 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             @yield('navbar-content')
-            @if(auth()->check() && auth()->user()->isAdmin())
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user"></span>  {{ auth()->user()->email }}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ action('DashboardController@index') }}">Dashboard</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="{{ action('SessionController@logout') }}">Cerrar Sesión</a></li>
-                            </ul>
-                    </li>
-                </ul>
+            <ul class="nav navbar-nav navbar-right">
+            @if(auth()->check())
+                 @if(auth()->user()->isAdmin())
+                    @include('partials.admin-dropdown')
+                @else
+                    @include('partials.user-dropdown')
+                @endif
+            @else
+                <li>
+                    <a href="{{ action('SessionController@showUserLogin') }}">Iniciar Sesión</a>
+                </li>
             @endif
+            </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>

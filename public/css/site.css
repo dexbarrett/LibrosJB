@@ -89,3 +89,11 @@ div.delete-photo a {
 ul.img-list li:hover div.delete-photo {
   opacity: .7;
 }
+
+.fb-login {
+    text-align: center;
+}
+
+.fb-login-icon {
+    line-height: 62px !important;
+}
