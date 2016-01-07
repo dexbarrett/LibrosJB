@@ -18,7 +18,10 @@ class AuthenticateUser
             return $listener->authorizationFailed();
         }
 
-        $user = User::firstOrNew($this->getUserData());
+        $userData = $this->getUserData();
+
+        $user = User::firstOrNew(['facebook_id' => $userData->getId()]);
+        $user->email = $userData->getEmail();
         $user->setRandomPasswordIfNotPresent();
         $user->save();
 
@@ -30,11 +33,6 @@ class AuthenticateUser
 
     protected function getUserData()
     {
-        $userData = Socialite::driver('facebook')->user();
-
-        return [
-            'email' => $userData->getEmail(),
-            'facebook_id' => $userData->getId()
-        ];
+        return Socialite::driver('facebook')->user();
     }
 }
