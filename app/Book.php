@@ -31,6 +31,11 @@ class Book extends Model implements SluggableInterface
         return strlen(trim($this->comments)) > 0;
     }
 
+    public function isSoldBy($userID)
+    {
+        return (bool) ($this->user_id === $userID);
+    }
+
     /* Query Scopes */
 
     public function scopeForSale($query)
@@ -84,6 +89,11 @@ class Book extends Model implements SluggableInterface
     }
 
     /* Relationships */
+
+    public function user()
+    {
+        return $this->belongsTo('LibrosJB\User');
+    }
 
     public function author()
     {

@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    protected $subscribe = [
+        \LibrosJB\Listeners\MessageEventListener::class
+    ];
+
     /**
      * Register any other events for your application.
      *

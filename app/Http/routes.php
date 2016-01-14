@@ -13,11 +13,6 @@
 Route::get('author-search', 'SearchController@findByAuthorName');
 Route::get('publisher-search', 'SearchController@findByPublisherName');
 
-Route::get('/{sortBy?}/{direction?}', 'BookController@index')
-->where(['sortBy' => 'titulo|precio|autor', 'direction' => 'asc|desc']);
-
-Route::get('books/{slug}', 'BookController@show');
-
 Route::get('login', 'SessionController@showUserLogin')
     ->middleware(['alreadyLoggedIn']);
 
@@ -25,6 +20,19 @@ Route::get('login/authenticate', 'SessionController@authUserLogin');
 Route::get('login/callback', 'SessionController@processUserLogin');
 
 Route::get('logout', 'SessionController@logout');
+
+Route::get('/{sortBy?}/{direction?}', 'BookController@index')
+->where(['sortBy' => 'titulo|precio|autor', 'direction' => 'asc|desc']);
+
+Route::get('books/{slug}', 'BookController@show');
+
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('me/conversations', 'MessagesController@listConversations');
+    Route::post('conversations/{bookID}/create', 'MessagesController@createConversation');
+    Route::get('conversations/{conversationID}',
+     ['uses' => 'MessagesController@showConversation', 'middleware' => ['clearUnreadMessages']]);
+    Route::post('messages/{conversationID}/create', 'MessagesController@createMessage');
+});
 
 /* Admin Routes */
 Route::get('adminlogin', 'SessionController@showAdminLogin')
