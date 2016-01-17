@@ -7,7 +7,15 @@
 <div class="row">
     <div class="col-md-3 book-detail-cover">
         <img src="/{{ $book->cover_thumbnail_path }}" alt="{{ $book->title }}" class="img-responsive">
-        <a href="#" class="btn btn-info book-details-buy">contactar vendedor</a>
+        @if(auth()->guest())
+            <a href="{{ action('SessionController@showUserLogin') }}" class="btn btn-info book-details-buy">
+                contactar vendedor
+            </a>
+        @elseif(auth()->check() && !$book->isSoldBy(auth()->user()->id))
+            {!! Form::open(['action' => ['MessagesController@createConversation', $book->id]]) !!}
+            {!! Form::submit('contactar vendedor', ['class' => 'btn btn-info book-details-buy']) !!}
+            {!! Form::close() !!}
+        @endif
     </div>
     <div class="col-md-9 book-details">
         <h2>{{ $book->title }}</h2>
@@ -23,8 +31,10 @@
         <p><strong>Sinopsis</strong></p>
         <p class="text-justify">{{ $book->extract }}</p>
         @if($book->hasComments())
-        <p><strong>Comentarios del vendedor:</strong></p>
-        <p>{{ $book->comments }}</p>
+        <div class="alert alert-warning">
+            <p><strong>Notas del vendedor</strong></p>
+            <p>{{ $book->comments }}</p>
+        </div>
         @endif
         <hr>
         <div class="row">

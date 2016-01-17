@@ -30,5 +30,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \LibrosJB\Http\Middleware\RedirectIfAuthenticated::class,
         'auth.admin' => \LibrosJB\Http\Middleware\AdminAuthMiddleware::class,
+        'alreadyLoggedIn' => \LibrosJB\Http\Middleware\AlreadyLoggedIn::class,
+        'clearUnreadMessages' => \LibrosJB\Http\Middleware\ClearUnreadMessages::class,
     ];
 }

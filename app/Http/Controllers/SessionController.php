@@ -2,13 +2,22 @@
 
 namespace LibrosJB\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use LibrosJB\Http\Requests;
+use Illuminate\Http\Request;
+use LibrosJB\AuthenticateUser;
+use LibrosJB\AuthenticateUserListener;
 use LibrosJB\Http\Controllers\Controller;
 
-class SessionController extends Controller
+
+class SessionController extends Controller implements AuthenticateUserListener
 {
+    protected $authenticateUser;
+
+    public function __construct(AuthenticateUser $authenticateUser)
+    {
+        $this->authenticateUser = $authenticateUser;
+    }
+
     public function showAdminLogin()
     {
         return view('admin.login');
@@ -16,17 +25,46 @@ class SessionController extends Controller
 
     public function authAdminLogin()
     {
-        $email = request()->input('email');
-        $password = request()->input('password');
+        $email = e(request()->input('email'));
+        $password = e(request()->input('password'));
 
         if (auth()->attempt(compact('email', 'password'))) {
-            return redirect()->action('DashboardController@index');
+            return redirect()
+                ->intended(action('DashboardController@index'));
         }
 
         return redirect()->back()
                 ->withInput()
                 ->with('message', 'los datos de usuario son incorrectos')
                 ->with('message-type', 'warning'); 
+    }
+
+    public function showUserLogin()
+    {
+        return view('login');
+    }
+
+    public function authUserLogin()
+    {
+        return $this->authenticateUser->authorize();
+    }
+
+    public function processUserLogin()
+    {
+        return $this->authenticateUser->login($this);
+    }
+
+    public function authorizationFailed()
+    {
+        return redirect()
+                ->action('SessionController@showUserLogin')
+                ->with('message', 'Ocurrió un error al iniciar sesión con Facebook')
+                ->with('message-type', 'danger');
+    }
+
+    public function userHasLoggedIn()
+    {
+        return redirect()->intended('/');
     }
 
     public function logout()

@@ -74,7 +74,7 @@ class BookController extends Controller
 
         return redirect()
             ->action('BookController@edit', ['id' => $id])
-            ->with('message', 'Libro actualizado correctamente');
+            ->with('message', 'Información actualizada correctamente');
     }
 
     public function store()

@@ -10,19 +10,34 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('author-search', 'SearchController@findByAuthorName');
+Route::get('publisher-search', 'SearchController@findByPublisherName');
+
+Route::get('login', 'SessionController@showUserLogin')
+    ->middleware(['alreadyLoggedIn']);
+
+Route::get('login/authenticate', 'SessionController@authUserLogin');
+Route::get('login/callback', 'SessionController@processUserLogin');
+
+Route::get('logout', 'SessionController@logout');
 
 Route::get('/{sortBy?}/{direction?}', 'BookController@index')
 ->where(['sortBy' => 'titulo|precio|autor', 'direction' => 'asc|desc']);
 
 Route::get('books/{slug}', 'BookController@show');
 
-Route::get('author-search', 'SearchController@findByAuthorName');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('me/conversations', 'MessagesController@listConversations');
+    Route::post('conversations/{bookID}/create', 'MessagesController@createConversation');
+    Route::get('conversations/{conversationID}',
+     ['uses' => 'MessagesController@showConversation', 'middleware' => ['clearUnreadMessages']]);
+    Route::post('messages/{conversationID}/create', 'MessagesController@createMessage');
+});
 
-Route::get('publisher-search', 'SearchController@findByPublisherName');
-
-Route::get('adminlogin', 'SessionController@showAdminLogin');
+/* Admin Routes */
+Route::get('adminlogin', 'SessionController@showAdminLogin')
+    ->middleware(['alreadyLoggedIn']);
 Route::post('adminlogin', 'SessionController@authAdminLogin');
-Route::get('logout', 'SessionController@logout');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
     Route::get('books/create', 'BookController@create');
