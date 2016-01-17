@@ -64,7 +64,7 @@ class SessionController extends Controller implements AuthenticateUserListener
 
     public function userHasLoggedIn()
     {
-        return redirect('/');
+        return redirect()->intended('/');
     }
 
     public function logout()
