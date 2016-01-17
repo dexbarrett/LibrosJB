@@ -30,7 +30,7 @@ class SessionController extends Controller implements AuthenticateUserListener
 
         if (auth()->attempt(compact('email', 'password'))) {
             return redirect()
-                ->action('DashboardController@index');
+                ->intended(action('DashboardController@index'));
         }
 
         return redirect()->back()
