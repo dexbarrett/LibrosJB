@@ -22,4 +22,13 @@ class Message extends Model
     {
         return $this->belongsTo(User::class, 'to_user');
     }
+
+    public function getStatusAttribute()
+    {
+        if ((bool)$this->attributes['read'] === true) {
+            return 'read';
+        }
+
+        return 'unread';
+    }
 }

@@ -10,7 +10,11 @@
                         {{ ucwords($conversation->bookTitle) }}
                     </a>
                     @if($conversation->unreadCount > 0)
-                        <span class="badge">{{ $conversation->unreadCount }}</span>
+                        <span class="label label-info">
+                        {{ $conversation->unreadCount  }}
+                        {{ pluralize('mensaje', $conversation->unreadCount) }}
+                        sin leer
+                        </span>
                     @endif
                     </li>
                 @endforeach

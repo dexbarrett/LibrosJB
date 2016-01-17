@@ -97,3 +97,8 @@ ul.img-list li:hover div.delete-photo {
 .fb-login-icon {
     line-height: 62px !important;
 }
+
+.menu-icon
+{
+    margin-right: 5px;
+}

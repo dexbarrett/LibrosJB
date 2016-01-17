@@ -3,7 +3,7 @@
 @section('navbar-content')
 <ul class="nav navbar-nav navbar-right">
     <li>
-        <a  id="new-message" href="#" class="btn btn-warning navbar-link" data-toggle="modal" data-target="#message-box">Nuevo mensaje</a>
+        <a  id="new-message" href="#" class="btn btn-danger navbar-link" data-toggle="modal" data-target="#message-box">Nuevo mensaje</a>
     </li>
 </ul>
 @stop
@@ -13,7 +13,7 @@
         @foreach($conversation->messages as $message)
             <div class="row message">
                 <div class="col-md-6 column">
-                    <div class="alert" data-user-id="{{ $message->from_user }}">
+                    <div id="{{ $message->id }}" class="alert {{ $message->status }}" data-user-id="{{ $message->from_user }}">
                             {!! nl2br($message->message) !!}
                     </div>
                 </div>
@@ -44,17 +44,22 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- modal box end -->
+<a id="bottom" name="bottom"></a>
 @stop
 @section('custom-scripts')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
 <script>
     submitButton = $('#publish');
-    var ownId = {{ auth()->user()->id }}
+    var oldestUnreadMessageID = {{ $oldestUnreadMessageID }};
+    var ownId = {{ auth()->user()->id }};
     var messages = $('div.messages');
     var ownMessages = messages.find('.alert[data-user-id=' + ownId + ']');
 
-    ownMessages.addClass('alert-info').closest('div.column')
+    ownMessages.addClass('alert-success').closest('div.column')
         .addClass('col-md-offset-1');
-    messages.find('.alert').not(ownMessages).addClass('alert-danger')
+    messages.find('.alert.read').not(ownMessages).addClass('alert-info')
+        .closest('div.column').addClass('col-md-offset-2');
+        messages.find('.alert.unread').not(ownMessages).addClass('alert-danger')
         .closest('div.column').addClass('col-md-offset-2');
 
     $('#message-box').on('hidden.bs.modal', function (e) {
@@ -63,9 +68,14 @@
     });
 
     $('#message-content').on('input', function(e){
-        var disabled = ($(this).val().trim().length == 0);
+        var disabled = ($(this).val().trim().length < 5);
         submitButton.prop('disabled', disabled);
-        console.log(disabled);
     });
+
+    if (oldestUnreadMessageID == 0) {
+        $.scrollTo('#bottom');
+    } else {
+        $.scrollTo('#' + oldestUnreadMessageID, {offset: -70});
+    }
 </script>
 @stop

@@ -52,8 +52,21 @@ class MessagesController extends Controller
             $query->orderBy('created_at');
         }])->findOrFail($conversationID);
 
+        $oldestUnreadMessageID = Message::where('conversation_id', $conversation->id)
+                                ->where('to_user', $this->user->id)
+                                ->where('read', false)
+                                ->orderBy('created_at')
+                                ->first();
+
+        if (is_null($oldestUnreadMessageID)) {
+            $oldestUnreadMessageID = 0;
+        } else {
+            $oldestUnreadMessageID = $oldestUnreadMessageID->id;
+        }
+
         return view('books.messages')
-            ->with(compact('conversation'));
+            ->with(compact('conversation'))
+            ->with(compact('oldestUnreadMessageID'));
     }
 
     public function createMessage($conversationID)

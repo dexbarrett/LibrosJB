@@ -21,3 +21,16 @@ function mapFieldToDBColumn($field)
         return $FieldColumnMap[$field];
     }
 }
+
+function pluralize($word, $number)
+{
+    $words = [
+        'mensaje' => 'mensajes'
+    ];
+
+    if ($number == 1) {
+        return $word;
+    }
+
+    return $words[$word];
+}

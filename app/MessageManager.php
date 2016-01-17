@@ -3,9 +3,18 @@ namespace LibrosJB;
 
 use DB;
 use LibrosJB\ConversationInfo;
+use Illuminate\Contracts\Cache\Repository as Cache;
 
 class MessageManager
 {
+    protected $cache;
+    protected $cacheUserKey = 'user-unread-messages-';
+
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+
     public function getConversationsForUser($userID)
     {
        return DB::table('conversations')
@@ -36,7 +45,59 @@ class MessageManager
             return;
         }
 
+        $this->decrementTotalUnreadMessagesForUser(
+            auth()->user()->id, $conversation->unread_messages
+        );
+
         $conversation->unread_messages = 0;
         $conversation->save();
+
+        DB::table('messages')
+            ->where('conversation_id', $conversationID)
+            ->where('to_user', auth()->user()->id)
+            ->where('read', false)
+            ->update(['read' => true]);
+    }
+
+    public function getTotalUnreadMessagesForUser($userID)
+    {
+        $totalUnreadMessages = $this->cache->rememberForever($this->getUserCacheKey($userID), function() use ($userID) {
+            return (int) $this->getTotalUnreadMessagesForUserFromDB($userID);
+        });
+
+        return $totalUnreadMessages;
+    }
+
+    public function incrementTotalUnreadMessagesForUser($userID, $amount = 1)
+    {
+        if ($this->userMessagesNotInCache($userID)) {
+            $this->getTotalUnreadMessagesForUser($userID);
+        }
+
+        $this->cache->increment($this->getUserCacheKey($userID), $amount);
+    }
+
+    public function decrementTotalUnreadMessagesForUser($userID, $amount = 1)
+    {
+        if ($this->userMessagesNotInCache($userID)) {
+            $this->getTotalUnreadMessagesForUser($userID);
+        }
+
+        $this->cache->decrement($this->getUserCacheKey($userID), $amount);
+    }
+
+    protected function getTotalUnreadMessagesForUserFromDB($userID)
+    {
+        return ConversationInfo::where('user_id', $userID)->sum('unread_messages');
+    }
+
+    protected function getUserCacheKey($userID)
+    {
+        return $this->cacheUserKey . $userID;
+    }
+
+    protected function userMessagesNotInCache($userID)
+    {
+        return ! $this->cache->has($this->getUserCacheKey($userID));
     }
 }
