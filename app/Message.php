@@ -23,6 +23,11 @@ class Message extends Model
         return $this->belongsTo(User::class, 'to_user');
     }
 
+    public function conversation()
+    {
+        return $this->belongsTo(Conversation::class);
+    }
+
     public function getStatusAttribute()
     {
         if ((bool)$this->attributes['read'] === true) {
