@@ -102,3 +102,10 @@ ul.img-list li:hover div.delete-photo {
 {
     margin-right: 5px;
 }
+
+.message-timestamp {
+    margin-top: -9px;
+    margin-right: -6px;
+    font-style: italic;
+    font-size: 0.75em;
+}
