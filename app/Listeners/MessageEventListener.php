@@ -3,18 +3,19 @@ namespace LibrosJB\Listeners;
 
 use LibrosJB\MessageManager;
 use LibrosJB\ConversationInfo;
-use Illuminate\Contracts\Mail\Mailer;
 use LibrosJB\Events\MessagePublished;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use LibrosJB\Jobs\SendMessageNotificationEmail;
 
 class MessageEventListener
 {
     protected $MessageManager;
-    protected $mailer;
 
-    public function __construct(MessageManager $MessageManager, Mailer $mailer)
+    use DispatchesJobs;
+
+    public function __construct(MessageManager $MessageManager)
     {
         $this->MessageManager = $MessageManager;
-        $this->mailer = $mailer;
     }
 
     public function onMessageCreated(MessagePublished $event)
@@ -31,16 +32,7 @@ class MessageEventListener
         $conversationInfo->unread_messages ++;
         $conversationInfo->save();
 
-
-        $mailData = [
-            'bookTitle' => $message->conversation->book->title,
-            'messageContent' => $message->message,
-            'conversationID' => $message->conversation_id
-        ];
-        $this->mailer->send('emails.new-message', $mailData, function($m) use($message){
-            $m->to($message->to->email, 'Sucker')
-              ->subject('Has recibido un nuevo mensaje');
-        });
+        $this->dispatch(new SendMessageNotificationEmail($message));
 
     }
 
