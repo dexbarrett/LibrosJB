@@ -12,12 +12,18 @@
         @include('partials.flash-messages')
         @include('partials.validation-errors')
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="form-group">
                     {!! Form::label('title', 'Título del libro') !!}
                     {!! Form::text('title', null, ['class' => 'form-control', 'autocomplete' => 'off']) !!}
                 </div>
-            </div>    
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    {!! Form::label('format', 'Formato') !!}
+                    {!! Form::select('format', $bookFormats, null, ['class' => 'form-control', 'placeholder' => 'seleccionar']) !!}
+                </div>
+            </div>   
         </div>
         <div class="row">
             <div class="col-md-4">

@@ -24,6 +24,7 @@
             <li>Editorial - <strong>{{ $book->publisher->name }}</strong></li>
             <li>Año de edición - <strong>{{ $book->edition_year }}</strong></li>
             <li>Número de páginas - <strong>{{ $book->pages }}</strong></li>
+            <li>Formato - <strong>{{ $book->format->name }}</strong></li>
             <li>Precio - <strong>${{ $book->sale_price }}</strong></li>
             <li>Idioma - <strong>{{ $book->language->name }}</strong></li>
             <li>Condición - <strong>{{ $book->condition->name }}</strong></li>

@@ -64,6 +64,7 @@ class RegisterBook
         $book = new Book;
         $book->user_id = $data['user_id'];
         $book->title = $data['title'];
+        $book->format_id = $data['format'];
         $book->language_id = $data['language'];
         $book->edition_year = $data['edition_year'];
         $book->pages = $data['pages'];
@@ -88,6 +89,7 @@ class RegisterBook
         $book = Book::findOrFail($id);
 
         $book->title = $data['title'];
+        $book->format_id = $data['format'];
         $book->language_id = $data['language'];
         $book->edition_year = $data['edition_year'];
         $book->pages = $data['pages'];

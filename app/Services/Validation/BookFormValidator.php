@@ -7,6 +7,7 @@ class BookFormValidator extends FormValidator
 
         'create' => [
             'title' => 'required',
+            'format' => 'required|integer|exists:book_format,id',
             'author' => 'required',
             'publisher' => 'required',
             'language' => 'required|integer|exists:languages,id',
@@ -21,6 +22,7 @@ class BookFormValidator extends FormValidator
 
         'update' => [
             'title' => 'required',
+            'format' => 'required|integer|exists:book_format,id',
             'author' => 'required',
             'publisher' => 'required',
             'language' => 'required|integer|exists:languages,id',
@@ -35,6 +37,7 @@ class BookFormValidator extends FormValidator
 
     protected $friendlyNames = [
         'title' => 'Título',
+        'format' => 'Formato',
         'author' => 'Autor',
         'publisher' => 'Editorial',
         'language' => 'Idioma',
@@ -43,7 +46,7 @@ class BookFormValidator extends FormValidator
         'extract' => 'sinopsis',
         'cover' => 'imagen de portada',
         'condition' => 'Condición',
-        'price' => 'precio de venta',
+        'price' => 'Precio de venta',
         'comments' => 'comentarios'
     ];
 

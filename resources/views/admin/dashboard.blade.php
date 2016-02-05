@@ -29,7 +29,7 @@
                 </td>
                 <td class="col-md-2 text-center">
                     <div class="btn-group">
-                        <a href="{{ action('BookController@edit', ['id' => $book->id]) }}" class="btn btn-primary btn-xs tooltipster" title="editar"><i class="fa fa-pencil button-icon"></i></a>
+                        <a href="{{ action('BookController@edit', ['id' => $book->id]) }}" class="btn btn-primary btn-xs tooltipster" title="editar información"><i class="fa fa-pencil button-icon"></i></a>
                         <a href="{{ action('BookPhotosController@create', ['id' => $book->id]) }}" class="btn btn-danger btn-xs tooltipster" title="agregar fotos">
                             <i class="fa fa-picture-o"></i>
                         </a> 
