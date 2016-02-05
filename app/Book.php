@@ -119,4 +119,9 @@ class Book extends Model implements SluggableInterface
     {
         return $this->hasMany('LibrosJB\Photo');
     }
+
+    public function format()
+    {
+        return $this->belongsTo(BookFormat::class);
+    }
 }

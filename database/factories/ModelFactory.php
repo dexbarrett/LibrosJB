@@ -14,7 +14,7 @@
 $factory->define(LibrosJB\User::class, function (Faker\Generator $faker) {
     return [
         'email' => 'admin@librosjb.com',
-        'password' => bcrypt('topsecret'),
+        'password' => 'topsecret',
         'admin' => 1
     ];
 });
@@ -40,5 +40,11 @@ $factory->define(LibrosJB\BookCondition::class, function(Faker\Generator $faker)
 $factory->define(LibrosJB\BookLanguage::class, function(Faker\Generator $faker) {
     return [
         'name' => 'español'
+    ];
+});
+
+$factory->define(LibrosJB\BookFormat::class, function(Faker\Generator $faker) {
+    return [
+        'name' => 'tapa blanda'
     ];
 });

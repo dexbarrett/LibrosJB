@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PublishersTableSeeder::class);
         $this->call(BookConditionsTableSeeder::class);
         $this->call(BookLanguagesTableSeeder::class);
+        $this->call(BookFormatTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
