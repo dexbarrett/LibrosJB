@@ -40,8 +40,8 @@ class SendMessageNotificationEmail extends Job implements SelfHandling, ShouldQu
         ];
         
         $mailer->send('emails.new-message', $mailData, function($m) {
-            $m->to($this->message->to->email, 'Sucker')
-              ->subject('Has recibido un nuevo mensaje');
+            $m->to($this->message->to->email, $this->message->to->name)
+              ->subject("Has recibido un nuevo mensaje de {$this->message->from->name}");
         });
     }
 }
