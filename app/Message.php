@@ -36,4 +36,10 @@ class Message extends Model
 
         return 'unread';
     }
+
+    public function scopeForConversation($query, $conversationID)
+    {
+        return $query->where('conversation_id', $conversationID)
+                     ->orderBy('created_at');
+    }
 }

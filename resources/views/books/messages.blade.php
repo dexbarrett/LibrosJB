@@ -10,7 +10,7 @@
 @section('page-content')
 <div class="row">
     <div class="messages">
-        @foreach($conversation->messages as $message)
+        @foreach($messages as $message)
             <div class="row message">
                 <div class="col-md-6 column">
                     <div id="{{ $message->id }}" class="message-content alert {{ $message->status }}" data-user-id="{{ $message->from_user }}">
