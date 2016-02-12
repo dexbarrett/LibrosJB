@@ -14,7 +14,9 @@
             <div class="row message">
                 <div class="col-md-6 column">
                     <div id="{{ $message->id }}" class="message-content alert {{ $message->status }}" data-user-id="{{ $message->from_user }}">
-                    <span class="pull-right message-timestamp">{{ $message->created_at->format('d/m/y - g:i a') }}</span>
+                    <span class="pull-right message-timestamp">
+                       {{ $message->from->name }} {{ $message->created_at->format('d/m/y - g:i a') }}
+                    </span>
                             {!! nl2br($message->message) !!}
                     </div>
                 </div>
