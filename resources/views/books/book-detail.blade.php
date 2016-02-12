@@ -18,7 +18,7 @@
         @endif
     </div>
     <div class="col-md-9 book-details">
-        <h2>{{ $book->title }}</h2>
+        <h2>{{ ucfirst($book->title) }}</h2>
         <ul>
             <li>Autor - <strong>{{ $book->author->name }}</strong></li>
             <li>Editorial - <strong>{{ $book->publisher->name }}</strong></li>

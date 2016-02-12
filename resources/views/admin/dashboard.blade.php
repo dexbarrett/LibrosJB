@@ -13,7 +13,7 @@
 <table class="table table-condensed dashboard">
     <thead>
         <tr>
-            <th>título</th>
+            <th>Título</th>
             <th class="text-center">
                 <a href="{{ action('BookController@create') }}" class="btn btn-info btn-sm">nuevo libro</a></th>
             </th>
@@ -24,7 +24,7 @@
             <tr>
                 <td class="col-md-10">
                    <a href="{{ action('BookController@show', ['slug' => $book->url_slug]) }}" target="_blank">
-                        {{ $book->title }}
+                        {{ ucfirst($book->title) }}
                    </a>
                 </td>
                 <td class="col-md-2 text-center">
