@@ -11,7 +11,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $userBooks = Book::forUser($this->user->id)->get();
+        $userBooks = Book::forUser($this->user->id)
+                    ->select(['id', 'title', 'for_sale', 'url_slug'])
+                    ->get();
+
         return view('admin.dashboard')
             ->with(compact('userBooks'));
     }

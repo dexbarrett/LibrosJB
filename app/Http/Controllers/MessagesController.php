@@ -55,6 +55,7 @@ class MessagesController extends Controller
                     ->get();
 
         $oldestUnreadMessageID = Message::where('conversation_id', $conversation->id)
+                                ->select(['id'])
                                 ->where('to_user', $this->user->id)
                                 ->where('read', false)
                                 ->orderBy('created_at')
