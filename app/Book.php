@@ -65,11 +65,6 @@ class Book extends Model implements SluggableInterface
         $this->attributes['title'] = strtolower($title);
     }
 
-    public function getTitleAttribute($title)
-    {
-        return ucwords($title);
-    }
-
     public function setForSaleAttribute($forsale)
     {
 
