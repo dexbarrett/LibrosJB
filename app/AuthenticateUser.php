@@ -22,6 +22,7 @@ class AuthenticateUser
 
         $user = User::firstOrNew(['facebook_id' => $userData->getId()]);
         $user->email = $userData->getEmail();
+        $user->name = $userData->getName();
         $user->setRandomPasswordIfNotPresent();
         $user->save();
 

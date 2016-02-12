@@ -1,5 +1,5 @@
 <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user menu-icon"></span>{{ auth()->user()->email }}  <i class="fa fa-chevron-circle-down"></i></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-user menu-icon"></span>{{ auth()->user()->name }}  <i class="fa fa-chevron-circle-down"></i></a>
     <ul class="dropdown-menu">
         <li>
             <a href="{{ action('MessagesController@listConversations') }}">
