@@ -20,6 +20,7 @@ class MessageManager
        return DB::table('conversations')
             ->select([
                 'books.title as bookTitle', 'conversations.id',
+                'user_settings.email_notifications',
                 'conversation_info.unread_messages as unreadCount',
                  DB::raw('max(messages.created_at) as lastMessage'),
             ])
@@ -31,6 +32,7 @@ class MessageManager
                 $join->on('conversations.id', '=', 'conversation_info.conversation_id')
                 ->where('conversation_info.user_id', '=', $userID);
             })
+            ->join('user_settings', 'conversation_info.user_id', '=', 'user_settings.user_id')
             ->groupBy('messages.conversation_id')
             ->orderBy('lastMessage', 'DESC')
             ->get();

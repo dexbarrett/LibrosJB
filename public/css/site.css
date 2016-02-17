@@ -109,3 +109,8 @@ ul.img-list li:hover div.delete-photo {
     font-style: italic;
     font-size: 0.8em;
 }
+
+.messages-tab {
+    padding-top: 10px;
+    padding-left: 15px;
+}

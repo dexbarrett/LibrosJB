@@ -37,6 +37,11 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token', 'facebook_id'];
 
+    public function settings()
+    {
+        return $this->hasOne(UserSettings::class);
+    }
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
@@ -52,5 +57,22 @@ class User extends Model implements AuthenticatableContract,
         if (is_null($this->password)) {
             $this->password = str_random(20);
         }
+    }
+
+    public function initializeSettings()
+    {
+        if ($this->settings) {
+            return;
+        }
+
+        $userSettings = new UserSettings;
+        $userSettings->email_notifications = true;
+        
+        $this->settings()->save($userSettings);
+    }
+
+    public function hasEmailNotificationsEnabled()
+    {
+        return (bool)$this->settings->email_notifications === true;
     }
 }

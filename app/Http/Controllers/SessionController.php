@@ -29,6 +29,9 @@ class SessionController extends Controller implements AuthenticateUserListener
         $password = e(request()->input('password'));
 
         if (auth()->attempt(compact('email', 'password'))) {
+            
+            auth()->user()->initializeSettings();
+
             return redirect()
                 ->intended(action('DashboardController@index'));
         }

@@ -1,6 +1,7 @@
 <?php
 namespace LibrosJB\Listeners;
 
+use LibrosJB\User;
 use LibrosJB\MessageManager;
 use LibrosJB\ConversationInfo;
 use LibrosJB\Events\MessagePublished;
@@ -32,8 +33,9 @@ class MessageEventListener
         $conversationInfo->unread_messages ++;
         $conversationInfo->save();
 
-        $this->dispatch(new SendMessageNotificationEmail($message));
-
+        if (User::findOrFail($message->to_user)->hasEmailNotificationsEnabled()) {
+            $this->dispatch(new SendMessageNotificationEmail($message));    
+        }
     }
 
     public function subscribe($events)
