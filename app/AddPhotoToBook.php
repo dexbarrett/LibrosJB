@@ -26,10 +26,7 @@ class AddPhotoToBook
         ->resize(500, 700, function($constraint) {
             $constraint->upsize();
         })
-        ->save(config('app.photo-path') . '/' . $photo->filename);
-
-        Image::make($this->file)
-        ->orientate()
+        ->save(config('app.photo-path') . '/' . $photo->filename)
         ->resize(100, 150)
         ->save(config('app.photo-thumbnail-path') . '/' . $photo->thumbnail_filename);
 
