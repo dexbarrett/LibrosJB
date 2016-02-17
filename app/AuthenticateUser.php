@@ -25,6 +25,8 @@ class AuthenticateUser
         $user->name = $userData->getName();
         $user->setRandomPasswordIfNotPresent();
         $user->save();
+        
+        $user->initializeSettings();
 
         Auth::login($user);
 

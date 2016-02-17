@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('conversations/{conversationID}',
      ['uses' => 'MessagesController@showConversation', 'middleware' => ['clearUnreadMessages']]);
     Route::post('messages/{conversationID}/create', 'MessagesController@createMessage');
+    Route::post('me/settings/email_notifications', 'SettingsController@updateEmailNotifications');
 });
 
 /* Admin Routes */
