@@ -18,9 +18,9 @@
         @endif
     </div>
     <div class="col-md-9 book-details">
-        <h2>{{ ucfirst($book->title) }}</h2>
+        <h2>{{ ucwords($book->title) }}</h2>
         <ul>
-            <li>Autor - <strong>{{ $book->author->name }}</strong></li>
+            <li>Autor - <strong>{{ ucwords($book->author->name) }}</strong></li>
             <li>Editorial - <strong>{{ $book->publisher->name }}</strong></li>
             <li>Año de edición - <strong>{{ $book->edition_year }}</strong></li>
             <li>Número de páginas - <strong>{{ $book->pages }}</strong></li>
@@ -30,7 +30,7 @@
             <li>Condición - <strong>{{ $book->condition->name }}</strong></li>
         </ul>
         <p><strong>Sinopsis</strong></p>
-        <p class="text-justify">{{ $book->extract }}</p>
+        <p class="text-justify">{!! nl2br($book->extract) !!}</p>
         @if($book->hasComments())
         <div class="alert alert-warning">
             <p><strong>Notas del vendedor</strong></p>
