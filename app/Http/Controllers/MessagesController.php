@@ -48,7 +48,8 @@ class MessagesController extends Controller
 
     public function showConversation($conversationID)
     {
-        $conversation = Conversation::findOrFail($conversationID);
+        $conversation = Conversation::with('book')
+                        ->findOrFail($conversationID);
         
         $messages = Message::forConversation($conversationID)
                     ->with('from')

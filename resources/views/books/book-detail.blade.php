@@ -7,11 +7,11 @@
 <div class="row">
     <div class="col-md-3 book-detail-cover">
         <img src="/{{ $book->cover_thumbnail_path }}" alt="{{ $book->title }}" class="img-responsive">
-        @if(auth()->guest())
+        @if($book->isForSale() && auth()->guest())
             <a href="{{ action('SessionController@showUserLogin') }}" class="btn btn-info book-details-buy">
                 contactar vendedor
             </a>
-        @elseif(auth()->check() && !$book->isSoldBy(auth()->user()->id))
+        @elseif($book->isForSale() && auth()->check() && !$book->isSoldBy(auth()->user()->id))
             {!! Form::open(['action' => ['MessagesController@createConversation', $book->id]]) !!}
             {!! Form::submit('contactar vendedor', ['class' => 'btn btn-info book-details-buy']) !!}
             {!! Form::close() !!}

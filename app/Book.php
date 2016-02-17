@@ -15,6 +15,10 @@ class Book extends Model implements SluggableInterface
         'save_to'    => 'url_slug'
     ];
 
+    protected $casts = [
+        'for_sale' => 'boolean'
+    ];
+
     public function addPhoto(Photo $photo)
     {
         return $this->photos()->save($photo);
@@ -34,6 +38,11 @@ class Book extends Model implements SluggableInterface
     public function isSoldBy($userID)
     {
         return (bool) ($this->user_id === $userID);
+    }
+
+    public function isForSale()
+    {
+        return $this->for_sale;
     }
 
     /* Query Scopes */

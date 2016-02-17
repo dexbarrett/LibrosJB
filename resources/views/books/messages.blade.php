@@ -2,9 +2,11 @@
 @section('page-title', 'Mensajes para libro')
 @section('navbar-content')
 <ul class="nav navbar-nav navbar-right">
+    @if($conversation->book->isForSale())
     <li>
         <a  id="new-message" href="#" class="btn btn-danger navbar-link" data-toggle="modal" data-target="#message-box">Nuevo mensaje</a>
     </li>
+    @endif
 </ul>
 @stop
 @section('page-content')
@@ -32,6 +34,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Escribe aquí tu mensaje</h4>
       </div>
+          @if($conversation->book->isForSale())
           {!! Form::open(['action' => ['MessagesController@createMessage', $conversation->id]]) !!}
           <div class="modal-body">
             <div class="form-group">
@@ -42,7 +45,8 @@
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             <input id="publish" type="submit" class="btn btn-success btn-md" value="Publicar" disabled>
           </div>
-      {!! Form::close() !!}
+          {!! Form::close() !!}
+          @endif
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
