@@ -62,7 +62,8 @@
         photoItem.hide().appendTo(photoList).fadeIn();
     });
 
-    $('.img-list').on('click', '.delete-photo a', function(){
+    $('.img-list').on('click', '.delete-photo a', function(e){
+        e.preventDefault();
         var deleteLink = $(this);
         swal({
             title:'¿Realmente deseas eliminar la foto?',
