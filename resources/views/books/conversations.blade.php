@@ -11,15 +11,15 @@
                 <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Configuración</a></li>
             </ul>
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane messages-tab active" id="conversations">
+                <div role="tabpanel" class="conversations tab-pane messages-tab active" id="conversations">
                     <ul>
                         @foreach($conversations as $conversation)
                         <li>
-                            <a href="{{ action('MessagesController@showConversation', ['conversationID' => $conversation->id]) }}">
+                            <a href="{{ action('MessagesController@showConversation', ['conversationID' => $conversation->id]) }}"><i class="fa fa-comment"></i>
                                 {{ ucwords($conversation->bookTitle) }}
                             </a>
                         @if($conversation->unreadCount > 0)
-                            <span class="label label-info">
+                            <span class="unread-messages label label-info">
                             {{ $conversation->unreadCount  }}
                             {{ pluralize('mensaje', $conversation->unreadCount) }}
                             sin leer

@@ -28,7 +28,7 @@ div.book-row
     padding-left: 5px;
 }
 
-.book-details ul
+.book-details ul, .conversations ul
 {
     list-style-type: none;
 }
@@ -112,5 +112,16 @@ ul.img-list li:hover div.delete-photo {
 
 .messages-tab {
     padding-top: 10px;
+}
+
+.conversations ul {
     padding-left: 15px;
+}
+
+.conversations li {
+    margin-bottom: 6px;
+}
+
+.unread-messages {
+    margin-left: 2px;
 }
