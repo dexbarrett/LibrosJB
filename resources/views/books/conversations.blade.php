@@ -13,7 +13,7 @@
             <div class="tab-content">
                 <div role="tabpanel" class="conversations tab-pane messages-tab active" id="conversations">
                     <ul>
-                        @foreach($conversations as $conversation)
+                        @forelse($conversations as $conversation)
                         <li>
                             <a href="{{ action('MessagesController@showConversation', ['conversationID' => $conversation->id]) }}"><i class="fa fa-comment"></i>
                                 {{ ucwords($conversation->bookTitle) }}
@@ -26,11 +26,13 @@
                             </span>
                         @endif
                         </li>
-                        @endforeach
+                        @empty
+                        <p>No tienes conversaciones aún</p>
+                        @endforelse
                     </ul>
                 </div>
                 <div role="tabpanel" class="tab-pane messages-tab" id="settings">
-                    <input id="email-notifications" type="checkbox" value="1" @if($conversation->email_notifications) checked @endif> recibir una notificación por correo cuando alguien me envíe un mensaje
+                    <input id="email-notifications" type="checkbox" value="1" @if(auth()->user()->hasEmailNotificationsEnabled()) checked @endif> recibir una notificación por correo cuando alguien me envíe un mensaje
                 </div>
             </div>
         </div>
