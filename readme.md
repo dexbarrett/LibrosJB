@@ -33,7 +33,7 @@ Admins have a dashboard that shows a list of books they have created. From here 
 
 ![Update book information](http://i.imgur.com/IufpoKm.gif)
 
-This other example shows validation. This comments field is optional but if is filled it should have at least 10 characters.
+This other example shows validation. This comments field is optional but if it's filled it should have at least 10 characters.
 
 ![Validations](http://i.imgur.com/eJKt4Nl.gif)
 
