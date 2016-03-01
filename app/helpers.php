@@ -35,6 +35,12 @@ function pluralize($word, $number)
     return $words[$word];
 }
 
-function getConversationIcon($bookForSale) {
-    return ($bookForSale)? 'fa-comment-o': 'fa-comment';
+function getConversationIcon($bookForSale, $unreadMessages) {
+    $iconClass = ($unreadMessages > 0)? 'commenting': 'comment';
+    
+    if ($bookForSale) {
+        $iconClass .= '-o';
+    }
+
+    return 'fa-' . $iconClass;
 }
