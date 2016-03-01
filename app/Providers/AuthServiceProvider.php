@@ -38,5 +38,13 @@ class AuthServiceProvider extends ServiceProvider
             return ($user->id === $conversation->from_user || $user->id === $conversation->to_user) && 
             $user->id !== $recipientID;
         });
+
+        $gate->define('manage-book', function ($user, $book) {
+            return $user->id === $book->user_id;
+        });
+
+        $gate->define('manage-photos', function ($user, $book) {
+            return $user->id === $book->user_id;
+        });
     }
 }

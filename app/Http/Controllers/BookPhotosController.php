@@ -14,6 +14,7 @@ class BookPhotosController extends Controller
     public function create($bookID)
     {
         $book = Book::findOrFail($bookID);
+        $this->authorize('manage-photos', $book);
 
         return view('admin.book-photos')
             ->with(compact('book'));
@@ -22,6 +23,8 @@ class BookPhotosController extends Controller
     public function store($bookID)
     {
         $book = Book::findOrFail($bookID);
+        $this->authorize('manage-photos', $book);
+
         $photo = request()->file('photo');
 
         $photoMaker = (new AddPhotoToBook($book, $photo))->save();
@@ -32,6 +35,8 @@ class BookPhotosController extends Controller
     public function delete()
     {
         $photo = Photo::findOrFail(e(request()->input('photoID')));
+        $this->authorize('manage-photos', $photo->book);
+
         $photo->delete();
     }
 }

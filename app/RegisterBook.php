@@ -84,10 +84,9 @@ class RegisterBook
         $book->save();
     }
 
-    protected function updateBook($id, array $data)
+    protected function updateBook($book, array $data)
     {
-        $book = Book::findOrFail($id);
-
+        
         $book->title = $data['title'];
         $book->format_id = $data['format'];
         $book->language_id = $data['language'];

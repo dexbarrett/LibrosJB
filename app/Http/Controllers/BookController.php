@@ -58,6 +58,8 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::findOrFail($id);
+        $this->authorize('manage-book', $book);
+
         $author = $book->author()->lists('name', 'id');
         $publisher = $book->publisher()->lists('name', 'id');
 
@@ -66,7 +68,10 @@ class BookController extends Controller
 
     public function update($id)
     {
-        if (! $this->registerBook->update($id, request()->all())) {
+        $book = Book::findOrFail($id);
+        $this->authorize('manage-book', $book);
+
+        if (! $this->registerBook->update($book, request()->all())) {
             return redirect()
                 ->back()
                 ->withInput()
@@ -99,8 +104,11 @@ class BookController extends Controller
     {
         $id = e(request()->input('id'));
         $status = e(request()->input('status'));
+        $book = Book::findOrFail($id);
 
-        Book::findOrFail($id)->changeStatus($status);
+        $this->authorize('manage-book', $book);
+
+        $book->changeStatus($status);
     }
 
     protected function bookDataHasErrors($data)
