@@ -26,6 +26,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         parent::registerPolicies($gate);
 
-        //
+        $gate->define('view-conversation', function ($user, $conversation) {
+            return $user->id === $conversation->from_user || $user->id === $conversation->to_user;
+        });
+
+        $gate->define('create-conversation', function ($user, $book) {
+            return $user->id !== $book->user_id;
+        });
+
+        $gate->define('create-message', function ($user, $conversation, $recipientID) {
+            return ($user->id === $conversation->from_user || $user->id === $conversation->to_user) && 
+            $user->id !== $recipientID;
+        });
     }
 }

@@ -35,6 +35,8 @@ class MessagesController extends Controller
     {
         $book = Book::findOrFail($bookID);
 
+        $this->authorize('create-conversation', $book);
+
         $conversation = Conversation::firstOrCreate([
             'book_id'   => $book->id,
             'from_user' => $this->user->id,
@@ -50,6 +52,8 @@ class MessagesController extends Controller
     {
         $conversation = Conversation::with('book')
                         ->findOrFail($conversationID);
+
+        $this->authorize('view-conversation', $conversation);
         
         $messages = Message::forConversation($conversationID)
                     ->with('from')
@@ -84,6 +88,8 @@ class MessagesController extends Controller
         } else {
             $to = $conversation->to_user;
         }
+
+        $this->authorize('create-message', [$conversation, $to]);
 
         ConversationInfo::firstOrCreate([
             'conversation_id' => $conversation->id,
