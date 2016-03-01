@@ -19,7 +19,7 @@ class MessageManager
     {
        return DB::table('conversations')
             ->select([
-                'books.title as bookTitle', 'conversations.id',
+                'books.title as bookTitle', 'books.for_sale as forsale', 'conversations.id',
                 'conversation_info.unread_messages as unreadCount',
                  DB::raw('max(messages.created_at) as lastMessage'),
             ])

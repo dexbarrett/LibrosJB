@@ -34,3 +34,7 @@ function pluralize($word, $number)
 
     return $words[$word];
 }
+
+function getConversationIcon($bookForSale) {
+    return ($bookForSale)? 'fa-comment-o': 'fa-comment';
+}

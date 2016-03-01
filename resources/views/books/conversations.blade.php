@@ -15,7 +15,7 @@
                     <ul>
                         @forelse($conversations as $conversation)
                         <li>
-                            <a href="{{ action('MessagesController@showConversation', ['conversationID' => $conversation->id]) }}"><i class="fa fa-comment"></i>
+                            <a href="{{ action('MessagesController@showConversation', ['conversationID' => $conversation->id]) }}"><i class="fa {{ getConversationIcon($conversation->forsale) }}"></i>
                                 {{ ucwords($conversation->bookTitle) }}
                             </a>
                         @if($conversation->unreadCount > 0)
