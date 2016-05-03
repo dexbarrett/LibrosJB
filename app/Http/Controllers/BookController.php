@@ -51,6 +51,10 @@ class BookController extends Controller
             ->with('photos')
             ->with('format')
             ->firstOrFail();
+
+        if ( $book->notForSale() && (auth()->guest() || !$book->isSoldBy(auth()->user()->id)) ) {
+            abort(404);
+        }
         
         return view('books.book-detail')->with(compact('book'));
     }

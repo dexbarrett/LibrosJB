@@ -42,7 +42,12 @@ class Book extends Model implements SluggableInterface
 
     public function isForSale()
     {
-        return $this->for_sale;
+        return (bool)$this->for_sale == true;
+    }
+
+    public function notForSale()
+    {
+        return ! $this->isForSale();
     }
 
     /* Query Scopes */
