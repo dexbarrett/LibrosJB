@@ -125,3 +125,7 @@ ul.img-list li:hover div.delete-photo {
 .unread-messages {
     margin-left: 2px;
 }
+
+.error-page {
+    font-size: 7em;
+}
