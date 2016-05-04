@@ -8,7 +8,7 @@
 </div>
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <img class="img-responsive" src="/images/book-tunnel.png" alt="">
+        @yield('error-image')
     </div>
 </div>
 @stop

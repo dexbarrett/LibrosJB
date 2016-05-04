@@ -5,8 +5,8 @@ namespace LibrosJB\Exceptions;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -42,12 +42,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
         
         if (config('app.debug') && app()->environment() != 'testing') {
             return $this->renderExceptionWithWhoops($request, $e);
+        }
+        
+
+        if ($e instanceof  \ErrorException) {
+             return response()->view('errors.500', [], 500);
         }
 
         return parent::render($request, $e);
