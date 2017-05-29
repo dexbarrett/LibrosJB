@@ -28,7 +28,6 @@ class RegisterBook
         }
 
         $this->storeBook($input);
-        $this->createBookCover($input['cover']);
 
         return true;
     }
@@ -82,6 +81,8 @@ class RegisterBook
         $book->publisher_id = $this->retrievePublisherId($data['publisher']);
 
         $book->save();
+
+        $this->createBookCover();
     }
 
     protected function updateBook($book, array $data)
@@ -101,6 +102,16 @@ class RegisterBook
         $book->author_id = $this->retrieveAuthorId($data['author']);
         $book->publisher_id = $this->retrievePublisherId($data['publisher']);
 
+        if (isset($data['cover'])) {
+            \File::delete(sprintf('%s/%s', public_path(), $book->cover_thumbnail_path));
+
+            $this->bookCoverFileName = $this->generateCoverFileName($data['cover']);
+            $this->bookCoverFile = $data['cover'];
+            $book->cover_picture = $this->bookCoverFileName;
+
+            $this->createBookCover();
+        }
+
         $book->save();
     }
 
@@ -113,7 +124,7 @@ class RegisterBook
 
     protected function generateCoverFileName(UploadedFile $imageFile)
     {
-        return time() . "." . $imageFile->guessExtension();
+        return sha1(time() . str_random(5)) . '.' . $imageFile->guessExtension();
     }
 
     protected function retrieveAuthorId($authorField)

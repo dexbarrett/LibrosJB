@@ -129,3 +129,42 @@ ul.img-list li:hover div.delete-photo {
 .error-page {
     font-size: 7em;
 }
+
+.update-cover-file {
+  position: relative;
+}
+
+.update-cover-file > input {
+  display:none;
+}
+
+.update-cover-file img {
+  display: block;
+  width: 200px;
+  height: 325px;
+}
+
+.update-cover-file .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 325px;
+  width: 200px;
+  opacity: 0;
+  background-color: #999;
+}
+
+.update-cover-file .text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 39%;
+  left: 32%;
+}
+
+.update-cover-file .overlay:hover {
+  opacity: 0.9;
+  cursor:pointer;
+}

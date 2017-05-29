@@ -14,7 +14,7 @@ class BookFormValidator extends FormValidator
             'edition_year' => 'required|integer|digits:4',
             'pages' => 'required|integer',
             'extract' => 'required|min:20',
-            'cover' => 'required|mimes:jpeg,gif,png',
+            'cover' => 'required|mimes:jpeg,png',
             'condition' => 'required|integer|exists:book_conditions,id',
             'price' => 'required|integer',
             'comments' => 'min:10'
@@ -29,6 +29,7 @@ class BookFormValidator extends FormValidator
             'edition_year' => 'required|integer',
             'pages' => 'required|integer',
             'extract' => 'required|min:20',
+            'cover' => 'mimes:jpeg,png',
             'condition' => 'required|integer|exists:book_conditions,id',
             'price' => 'required|integer',
             'comments' => 'min:10'

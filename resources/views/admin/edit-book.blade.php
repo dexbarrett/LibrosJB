@@ -6,9 +6,9 @@
 <link href="/lib/selectize/selectize.bootstrap3.css" rel="stylesheet">
 @stop
 @section('page-content')
-{!! Form::open(['action' => ['BookController@update', $book->id], 'files' => true]) !!}
+{!! Form::open(['action' => ['BookController@update', $book->id], 'files' => true, 'id' => 'editBookForm']) !!}
 <div class="row">
-    <div class="col-md-7 col-md-offset-2">
+    <div class="col-md-7 col-md-offset-1">
         @include('partials.flash-messages')
         @include('partials.validation-errors')
         <div class="row">
@@ -117,14 +117,45 @@
     </div>
 </div>
 </div>
+<div class="col-md-3">
+    <div class="update-cover-file">
+        <label for="cover">
+            <img src="/{{ $book->cover_thumbnail_path }}" class="book-cover">
+            <div class="overlay">
+                <span class="text">Cambiar portada</span>
+            </div>
+        </label>
+        <input id="cover" name="cover" type="file"/>
+    </div>
+</div>
 </div>
 {!! Form::close() !!}
 @stop
 @section('custom-scripts')
 <script src="/lib/bootstrap-switch/bootstrap-switch.min.js"></script>
-<script src="/lib/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
 <script src="/lib/selectize/selectize.min.js"></script>
 <script>
+    $('#cover').on('change', function() {
+
+        if ($(this)[0].files.length == 0) { return; }
+
+        var imageReader = new FileReader();
+
+        var fileType = $(this)[0].files[0].type;
+
+        if (! (new RegExp('image/jpeg|image/png').test(fileType))) { 
+            $(this).val('');
+            return;
+        }
+
+        imageReader.onload = function(e) {
+            $('.book-cover').attr('src', e.target.result);
+        };
+
+        imageReader.readAsDataURL($(this)[0].files[0]);
+    });
+
+
     $("[name='for-sale']").bootstrapSwitch({
         animate: false,
         onColor: 'success',
@@ -132,14 +163,6 @@
         onText: 'Sí',
         offText: 'No',
         size: 'large'
-    });
-
-    $('#cover').filestyle({
-        buttonText: '',
-        buttonName: 'btn-success',
-        size: 'lg',
-        iconName: 'fa fa-picture-o',
-        placeholder: 'seleccione un archivo de imagen'
     });
 
     $('#publish').on('click', function(e){
