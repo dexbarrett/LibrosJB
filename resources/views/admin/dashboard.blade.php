@@ -29,11 +29,11 @@
                 </td>
                 <td class="col-md-2 text-center">
                     <div class="btn-group">
-                        <a href="{{ action('BookController@edit', ['id' => $book->id]) }}" class="btn btn-primary btn-xs tooltipster" title="editar información"><i class="fa fa-pencil button-icon"></i></a>
-                        <a href="{{ action('BookPhotosController@create', ['id' => $book->id]) }}" class="btn btn-danger btn-xs tooltipster" title="agregar fotos">
+                        <a href="{{ action('BookController@edit', ['uuid' => $book->uuid]) }}" class="btn btn-primary btn-xs tooltipster" title="editar información"><i class="fa fa-pencil button-icon"></i></a>
+                        <a href="{{ action('BookPhotosController@create', ['uuid' => $book->uuid]) }}" class="btn btn-danger btn-xs tooltipster" title="agregar fotos">
                             <i class="fa fa-picture-o"></i>
                         </a> 
-                        <span class="toggle-wrapper">{!! Form::checkbox('for-sale-' . $book->id, '1', $book->for_sale, ['class' => 'forsale', 'data-id' => $book->id]) !!}</span>
+                        <span class="toggle-wrapper">{!! Form::checkbox('for-sale', '1', $book->for_sale, ['class' => 'forsale', 'data-id' => $book->uuid]) !!}</span>
                     </div>
                 </td>
             </tr>

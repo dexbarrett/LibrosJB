@@ -3,6 +3,7 @@ namespace LibrosJB;
 
 use Intervention\Image\ImageManager;
 use LibrosJB\Services\Validation\BookFormValidator;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RegisterBook
@@ -72,6 +73,7 @@ class RegisterBook
         $book->sale_price = $data['price'];
         $book->comments = $data['comments'];
         $book->for_sale = array_get($data, 'for-sale', 0); // Laravel array helper
+        $book->uuid = Uuid::uuid4()->toString();
 
         $this->bookCoverFileName = $this->generateCoverFileName($data['cover']);
         $this->bookCoverFile = $data['cover'];
