@@ -26,7 +26,7 @@
 <hr>
 </div>
 <div class="row">
-    {!! Form::open(['action' => ['BookPhotosController@store', $book->id], 'class' => 'dropzone']) !!}
+    {!! Form::open(['action' => ['BookPhotosController@store', $book->uuid], 'class' => 'dropzone']) !!}
     {!! Form::close() !!}
 </div>
 @stop

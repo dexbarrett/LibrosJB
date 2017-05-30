@@ -6,7 +6,7 @@
 <link href="/lib/selectize/selectize.bootstrap3.css" rel="stylesheet">
 @stop
 @section('page-content')
-{!! Form::open(['action' => ['BookController@update', $book->id], 'files' => true, 'id' => 'editBookForm']) !!}
+{!! Form::open(['action' => ['BookController@update', $book->uuid], 'files' => true, 'id' => 'editBookForm']) !!}
 <div class="row">
     <div class="col-md-7 col-md-offset-1">
         @include('partials.flash-messages')

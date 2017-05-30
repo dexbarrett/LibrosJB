@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $userBooks = Book::forUser($this->user->id)
-                    ->select(['id', 'title', 'for_sale', 'url_slug'])
+                    ->select(['id', 'title', 'for_sale', 'url_slug', 'uuid'])
                     ->get();
 
         return view('admin.dashboard')

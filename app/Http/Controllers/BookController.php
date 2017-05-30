@@ -59,9 +59,9 @@ class BookController extends Controller
         return view('books.book-detail')->with(compact('book'));
     }
 
-    public function edit($id)
+    public function edit($uuid)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::findByUuid($uuid);
         $this->authorize('manage-book', $book);
 
         $author = $book->author()->lists('name', 'id');
@@ -70,9 +70,10 @@ class BookController extends Controller
         return view('admin.edit-book')->with(compact('book', 'author', 'publisher'));
     }
 
-    public function update($id)
+    public function update($uuid)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::findByUuid($uuid);
+
         $this->authorize('manage-book', $book);
 
         if (! $this->registerBook->update($book, request()->all())) {
@@ -83,7 +84,7 @@ class BookController extends Controller
         }
 
         return redirect()
-            ->action('BookController@edit', ['id' => $id])
+            ->action('BookController@edit', ['uuid' => $uuid])
             ->with('message', 'Información actualizada correctamente');
     }
 
@@ -108,7 +109,7 @@ class BookController extends Controller
     {
         $id = e(request()->input('id'));
         $status = e(request()->input('status'));
-        $book = Book::findOrFail($id);
+        $book = Book::findByUuid($id);
 
         $this->authorize('manage-book', $book);
 

@@ -43,12 +43,12 @@ Route::post('adminlogin', 'SessionController@authAdminLogin');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
     Route::get('books/create', 'BookController@create');
     Route::post('books/create', 'BookController@store');
-    Route::get('books/edit/{id}', 'BookController@edit');
-    Route::post('books/update/{id}', 'BookController@update');
+    Route::get('books/edit/{uuid}', 'BookController@edit');
+    Route::post('books/update/{uuid}', 'BookController@update');
     Route::post('books/status', 'BookController@changeStatus')
         ->where(['id' => '\d+', 'status' => 'true|false']);
-    Route::get('books/{id}/photos', 'BookPhotosController@create');
-    Route::post('books/{id}/photos', 'BookPhotosController@store');
+    Route::get('books/{uuid}/photos', 'BookPhotosController@create');
+    Route::post('books/{uuid}/photos', 'BookPhotosController@store');
     Route::delete('photos/delete', 'BookPhotosController@delete');
     Route::get('dashboard', 'DashboardController@index');
 });

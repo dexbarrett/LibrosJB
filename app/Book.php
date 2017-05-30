@@ -50,6 +50,11 @@ class Book extends Model implements SluggableInterface
         return ! $this->isForSale();
     }
 
+    public static function findByUuid($uuid)
+    {
+        return static::where('uuid', $uuid)->firstOrFail();
+    }
+
     /* Query Scopes */
 
     public function scopeForSale($query)

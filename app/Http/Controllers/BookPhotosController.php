@@ -11,18 +11,18 @@ use LibrosJB\Http\Controllers\Controller;
 
 class BookPhotosController extends Controller
 {
-    public function create($bookID)
+    public function create($uuid)
     {
-        $book = Book::findOrFail($bookID);
+        $book = Book::findByUuid($uuid);
         $this->authorize('manage-photos', $book);
 
         return view('admin.book-photos')
             ->with(compact('book'));
     }
 
-    public function store($bookID)
+    public function store($uuid)
     {
-        $book = Book::findOrFail($bookID);
+        $book = Book::findByUuid($uuid);
         $this->authorize('manage-photos', $book);
 
         $photo = request()->file('photo');
