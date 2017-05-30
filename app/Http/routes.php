@@ -43,12 +43,16 @@ Route::post('adminlogin', 'SessionController@authAdminLogin');
 Route::group(['prefix' => 'admin', 'middleware' => ['auth.admin']], function(){
     Route::get('books/create', 'BookController@create');
     Route::post('books/create', 'BookController@store');
-    Route::get('books/edit/{uuid}', 'BookController@edit');
-    Route::post('books/update/{uuid}', 'BookController@update');
+    Route::get('books/edit/{uuid}', 'BookController@edit')
+        ->where('uuid', '[\w\d]{8,8}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{12,12}');
+    Route::post('books/update/{uuid}', 'BookController@update')
+        ->where('uuid', '[\w\d]{8,8}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{12,12}');
     Route::post('books/status', 'BookController@changeStatus')
         ->where(['id' => '\d+', 'status' => 'true|false']);
-    Route::get('books/{uuid}/photos', 'BookPhotosController@create');
-    Route::post('books/{uuid}/photos', 'BookPhotosController@store');
+    Route::get('books/{uuid}/photos', 'BookPhotosController@create')
+        ->where('uuid', '[\w\d]{8,8}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{12,12}');
+    Route::post('books/{uuid}/photos', 'BookPhotosController@store')
+        ->where('uuid', '[\w\d]{8,8}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{4,4}-[\w\d]{12,12}');
     Route::delete('photos/delete', 'BookPhotosController@delete');
     Route::get('dashboard', 'DashboardController@index');
 });
