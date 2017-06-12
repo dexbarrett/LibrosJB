@@ -20,12 +20,19 @@ class AddPhotoToBook
     public function save()
     {
         $photo = $this->book->addPhoto($this->makePhoto());
+        $photoFile = Image::make($this->file);
+        $watermark = Image::make(base_path('resources/librosjb-watermark.png'));
 
-        Image::make($this->file)
+        if ($watermark->width() > $photoFile->width()) {
+            $watermark->resize($photoFile->width() - 30, $watermark->height() - 30);
+        }
+        
+        $photoFile
         ->orientate()
         ->resize(500, 700, function($constraint) {
             $constraint->upsize();
         })
+        ->insert($watermark, 'center', 30, 30)
         ->save(config('app.photo-path') . '/' . $photo->filename);
 
         Image::make(config('app.photo-path') . '/' . $photo->filename)
