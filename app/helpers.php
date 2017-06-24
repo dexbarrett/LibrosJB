@@ -44,3 +44,14 @@ function getConversationIcon($bookForSale, $unreadMessages) {
 
     return 'fa-' . $iconClass;
 }
+
+function getBookConditionLabel($condition)
+{
+    $class = 'success';
+
+    if ($condition === 'usado') {
+        $class = 'warning';
+    }
+
+    return sprintf('<span class="label label-%s">%s</span>', $class, $condition);
+}

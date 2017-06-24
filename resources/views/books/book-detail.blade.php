@@ -27,7 +27,7 @@
             <li>Formato - <strong>{{ $book->format->name }}</strong></li>
             <li>Precio - <strong>${{ $book->sale_price }}</strong></li>
             <li>Idioma - <strong>{{ $book->language->name }}</strong></li>
-            <li>Condición - <strong>{{ $book->condition->name }}</strong></li>
+            <li>Condición -  {!! getBookConditionLabel($book->condition->name) !!}</li>
         </ul>
         <p><strong>Sinopsis</strong></p>
         <p class="text-justify">{!! nl2br($book->extract) !!}</p>
