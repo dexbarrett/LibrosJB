@@ -31,7 +31,7 @@ class BookController extends Controller
             $join->on('books.author_id', '=', 'authors.id')
             ->where('books.for_sale', '=', true);
         })
-        ->select(['books.cover_picture', 'books.title', 'books.url_slug'])
+        ->select(['books.cover_picture', 'books.title', 'books.url_slug', 'books.sale_price'])
         ->orderBy(mapFieldToDBColumn($sortBy), $direction)
         ->orderBy(mapFieldToDBColumn('titulo'), $direction)
         ->paginate(config('app.books-on-sale-per-page'));

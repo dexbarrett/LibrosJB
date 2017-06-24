@@ -168,3 +168,45 @@ ul.img-list li:hover div.delete-photo {
   opacity: 0.9;
   cursor:pointer;
 }
+
+.book-link {
+    display: inline-block;
+    max-width: 200px;
+}
+
+.book-link figure {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 0 auto; 
+}
+
+.book-link figure .ribbon {
+  background-color: #C4061C;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  width: 155px;
+  left: -44px;
+  top: 17px;
+  
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+
+
+}
+
+.book-link figure .ribbon span {
+  border: 1px solid #faa;
+  color: #fff;
+  display: block;
+  font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 1px 0;
+  padding: 5px 51px;
+  text-align: center;
+  text-decoration: none;
+}

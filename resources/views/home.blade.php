@@ -16,9 +16,14 @@
 @foreach($books->chunk(4) as $row)
     <div class="row book-row">
         @foreach($row as $book)
-            <div class="col-md-3 col-sm-6 book">
-                <a href="{{ action('BookController@show', ['slug' => $book->url_slug]) }}">
-                    <img src="/{{ $book->cover_thumbnail_path }}" title="{{ $book->title }}" class="img-responsive img-thumbnail center-block">
+            <div class="col-xs-12  col-sm-6 col-md-4 col-lg-3 book text-center">
+                <a href="{{ action('BookController@show', ['slug' => $book->url_slug]) }}" class="book-link">
+                    <figure>
+                        <img src="/{{ $book->cover_thumbnail_path }}" title="{{ $book->title }}" class="img-responsive">
+                        <div class="ribbon">
+                        <span>${{ $book->sale_price }}</span>
+                      </div>
+                    </figure>
                 </a>
             </div>
         @endforeach
