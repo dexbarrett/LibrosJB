@@ -45,12 +45,17 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+
+            if ($request->ajax()) {
+                return response()
+                    ->json(['error' =>  'Resource not found'], 404);
+            }
         }
-        
+
         if (config('app.debug') && app()->environment() != 'testing') {
             return $this->renderExceptionWithWhoops($request, $e);
         }
-        
+
 
         if ($e instanceof  \ErrorException) {
              return response()->view('errors.500', [], 500);
